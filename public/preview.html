@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!--
+  WALE — Product landing / live-preview page.
+  Self-contained (no external CSS/JS/fonts). Safe to host anywhere.
+
+  CUSTOMISE THE 3 LINKS below (search for data-cta):
+    • "Live Demo"      → your admin login URL      (default: login)
+    • "Documentation"  → your user guide           (default: user-guide.html)
+    • "Get WALE"       → your CodeCanyon item URL   (default: #)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WALE — WhatsApp AI Lead Engine</title>
+<meta name="description" content="Capture WhatsApp leads, reply with AI, run conversation funnels, and sell it as your own multi-tenant SaaS.">
+<style>
+  :root{
+    --green:#25D366; --green-d:#128C7E; --green-dd:#075E54;
+    --ink:#0f172a; --ink-2:#1e293b; --muted:#64748b; --line:#e5e9f0;
+    --bg:#ffffff; --bg-alt:#f7faf9; --card:#ffffff;
+    --radius:18px; --shadow:0 10px 40px rgba(15,23,42,.08);
+    --shadow-lg:0 24px 70px rgba(7,94,84,.18);
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  section{padding:88px 0}
+  h1,h2,h3{line-height:1.15;letter-spacing:-.02em;color:var(--ink)}
+  h2{font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:800}
+  .lead{color:var(--muted);font-size:1.08rem;max-width:640px}
+  .center{text-align:center;margin-inline:auto}
+  .eyebrow{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--green-d);background:rgba(37,211,102,.1);
+    padding:6px 14px;border-radius:999px;margin-bottom:16px}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:.98rem;
+    padding:13px 26px;border-radius:12px;border:1.5px solid transparent;cursor:pointer;
+    transition:transform .15s ease,box-shadow .2s ease,background .2s ease}
+  .btn svg{width:18px;height:18px}
+  .btn-primary{background:var(--green);color:#062b25;box-shadow:0 8px 24px rgba(37,211,102,.4)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,211,102,.5)}
+  .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.25)}
+  .btn-ghost:hover{background:rgba(255,255,255,.16)}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{transform:translateY(-2px)}
+  .btn-lgt{background:#fff;color:var(--green-dd);border-color:var(--line)}
+  .btn-lgt:hover{border-color:var(--green)}
+
+  /* Nav */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:1.15rem}
+  .brand .logo{width:38px;height:38px;border-radius:11px;background:var(--green);
+    display:grid;place-items:center;box-shadow:0 6px 16px rgba(37,211,102,.4)}
+  .brand .logo svg{width:22px;height:22px}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a.link{font-weight:600;color:var(--ink-2);font-size:.95rem}
+  .nav-links a.link:hover{color:var(--green-d)}
+  .menu-btn{display:none}
+  @media(max-width:860px){.nav-links .link{display:none}}
+
+  /* Hero */
+  .hero{position:relative;overflow:hidden;color:#fff;
+    background:radial-gradient(1200px 500px at 80% -10%,rgba(37,211,102,.35),transparent),
+      linear-gradient(160deg,#075E54 0%,#0b7a6d 45%,#128C7E 100%)}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;
+    gap:48px;align-items:center;padding-top:70px;padding-bottom:90px}
+  .hero h1{color:#fff;font-size:clamp(2.1rem,4.6vw,3.5rem);font-weight:900}
+  .hero h1 span{color:#c9ffe4}
+  .hero p{color:rgba(255,255,255,.9);font-size:1.14rem;margin:20px 0 30px;max-width:520px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:#c9ffe4;
+    background:rgba(255,255,255,.1);padding:7px 15px;border-radius:999px;margin-bottom:22px}
+  .hero .note{margin-top:22px;font-size:.86rem;color:rgba(255,255,255,.75)}
+  .hero .note code{background:rgba(0,0,0,.25);padding:2px 8px;border-radius:6px;color:#fff}
+  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr;text-align:center}
+    .hero .cta,.hero .tag{justify-content:center}.hero p{margin-inline:auto}.chat{display:none}}
+
+  /* Chat mockup */
+  .chat{background:#fff;border-radius:26px;padding:16px;box-shadow:var(--shadow-lg);
+    max-width:360px;margin-left:auto}
+  .chat-head{display:flex;align-items:center;gap:11px;padding:6px 6px 12px;border-bottom:1px solid #eef2f1}
+  .chat-head .av{width:40px;height:40px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+  .chat-head .av svg{width:22px;height:22px}
+  .chat-head b{color:var(--ink);font-size:.95rem}
+  .chat-head small{color:#22c55e;font-size:.75rem;font-weight:600}
+  .chat-body{background:#e6ded7;border-radius:0 0 18px 18px;padding:16px 12px;display:flex;
+    flex-direction:column;gap:10px;min-height:280px}
+  .bub{max-width:80%;padding:9px 13px;border-radius:14px;font-size:.86rem;color:var(--ink);
+    box-shadow:0 1px 1px rgba(0,0,0,.06);animation:pop .5s both}
+  .bub.in{background:#fff;align-self:flex-start;border-top-left-radius:4px}
+  .bub.out{background:#d9fdd3;align-self:flex-end;border-top-right-radius:4px}
+  .bub.out.ai::before{content:"🤖 AI";display:block;font-size:.62rem;color:#0b7a6d;font-weight:700;margin-bottom:2px}
+  .bub:nth-child(2){animation-delay:.3s}.bub:nth-child(3){animation-delay:.7s}
+  .bub:nth-child(4){animation-delay:1.1s}.bub:nth-child(5){animation-delay:1.5s}
+  @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+
+  /* Stats bar */
+  .stats{background:var(--ink);color:#fff;padding:34px 0}
+  .stats .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  .stats .n{font-size:1.9rem;font-weight:900;color:#7dffbe}
+  .stats .l{font-size:.86rem;color:rgba(255,255,255,.7)}
+  @media(max-width:680px){.stats .grid{grid-template-columns:repeat(2,1fr);gap:26px}}
+
+  /* Feature grid */
+  .sec-head{max-width:660px;margin:0 auto 52px;text-align:center}
+  .sec-head p{margin-top:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:900px){.grid3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid3{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 24px;transition:transform .18s ease,box-shadow .2s ease,border-color .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(37,211,102,.5)}
+  .card .ico{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;
+    background:linear-gradient(135deg,rgba(37,211,102,.15),rgba(18,140,126,.12));color:var(--green-d)}
+  .card .ico svg{width:26px;height:26px}
+  .card h3{font-size:1.15rem;font-weight:750;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.95rem}
+
+  /* Alt section */
+  .alt{background:var(--bg-alt)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .split + .split{margin-top:80px}
+  @media(max-width:860px){.split{grid-template-columns:1fr;gap:32px}.split.rev .visual{order:-1}}
+  .feat-list{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:14px}
+  .feat-list li{display:flex;gap:12px;align-items:flex-start;font-size:.98rem;color:var(--ink-2)}
+  .feat-list .tick{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(37,211,102,.15);
+    display:grid;place-items:center;color:var(--green-d);margin-top:1px}
+  .feat-list .tick svg{width:14px;height:14px}
+  .visual{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);
+    padding:24px;min-height:240px}
+  .mini{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);
+    border-radius:12px;margin-bottom:11px;background:#fff}
+  .mini .d{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+  .mini b{font-size:.9rem}.mini span{font-size:.78rem;color:var(--muted)}
+  .bar{height:8px;border-radius:99px;background:#eef2f1;overflow:hidden;margin-top:6px}
+  .bar > i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--green-d))}
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:99px}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:s}
+  @media(max-width:860px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr}}
+  .step{position:relative;padding:26px 22px;border-radius:var(--radius);background:#fff;border:1px solid var(--line)}
+  .step .num{width:40px;height:40px;border-radius:11px;background:var(--green-dd);color:#fff;
+    font-weight:800;display:grid;place-items:center;margin-bottom:14px}
+  .step h3{font-size:1.05rem;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:.92rem}
+
+  /* Reseller band */
+  .band{background:linear-gradient(160deg,#0b7a6d,#075E54);color:#fff}
+  .band .grid3 .card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+  .band .grid3 .card:hover{border-color:rgba(255,255,255,.4)}
+  .band .card h3{color:#fff}.band .card p{color:rgba(255,255,255,.82)}
+  .band .card .ico{background:rgba(255,255,255,.12);color:#c9ffe4}
+  .band h2,.band .sec-head p{color:#fff}.band .sec-head p{opacity:.85}
+  .band .eyebrow{color:#c9ffe4;background:rgba(255,255,255,.12)}
+
+  /* CTA */
+  .cta-final{text-align:center}
+  .cta-final .box{background:linear-gradient(160deg,#075E54,#128C7E);border-radius:28px;
+    padding:64px 30px;color:#fff;box-shadow:var(--shadow-lg)}
+  .cta-final h2{color:#fff}.cta-final p{color:rgba(255,255,255,.9);margin:14px auto 28px}
+  .cta-final .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  /* Footer */
+  footer{background:var(--ink);color:rgba(255,255,255,.7);padding:40px 0;text-align:center;font-size:.9rem}
+  footer .brand{justify-content:center;color:#fff;margin-bottom:12px}
+  footer a{color:#9ff5cf}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <div class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a8.5 8.5 0 0 0-7.4 12.7L3.5 20l4.4-1.1A8.5 8.5 0 1 0 12 3z" fill="#fff"/><circle cx="9" cy="12" r="1.1" fill="#25D366"/><circle cx="12" cy="12" r="1.1" fill="#25D366"/><circle cx="15" cy="12" r="1.1" fill="#25D366"/></svg></span>
+      WALE
+    </div>
+    <nav class="nav-links">
+      <a class="link" href="#features">Features</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#reseller">For Resellers</a>
+      <a class="link" href="user-guide.html" data-cta="docs">Docs</a>
+      <a class="btn btn-dark" href="login" data-cta="demo">Live Demo</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">● WhatsApp AI Lead Engine</span>
+      <h1>Turn WhatsApp into an <span>automated sales machine</span></h1>
+      <p>WALE captures every WhatsApp lead, replies instantly with AI, guides customers through smart funnels, and scores them automatically — so you close more, effortlessly. Sell it as your own SaaS.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="login" data-cta="demo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          View Live Demo
+        </a>
+        <a class="btn btn-ghost" href="user-guide.html" data-cta="docs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h11a2 2 0 0 1 2 2v12M4 5v13a1 1 0 0 0 1 1h12M4 5a1 1 0 0 0-1 1v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Documentation
+        </a>
+      </div>
+      <p class="note">Demo login: <code>admin@wale.dev</code> · <code>Admin@1234</code></p>
+    </div>
+
+    <!-- Live chat mockup -->
+    <div class="chat">
+      <div class="chat-head">
+        <span class="av"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a8.5 8.5 0 0 0-7.4 12.7L3.5 20l4.4-1.1A8.5 8.5 0 1 0 12 3z" fill="#fff"/></svg></span>
+        <div><b>WALE Assistant</b><br><small>● online</small></div>
+      </div>
+      <div class="chat-body">
+        <div class="bub in">Hi! Do you sell solar panels? 🔆</div>
+        <div class="bub out ai">Absolutely! We install rooftop solar. May I ask — do you own or rent your home?</div>
+        <div class="bub in">I own it</div>
+        <div class="bub out ai">Great! What's your average monthly electricity bill? This helps me recommend the right system.</div>
+        <div class="bub in">Around $180</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="wrap grid">
+    <div><div class="n">24/7</div><div class="l">AI auto-replies</div></div>
+    <div><div class="n">0s</div><div class="l">Response time</div></div>
+    <div><div class="n">∞</div><div class="l">Businesses (multi-tenant)</div></div>
+    <div><div class="n">100%</div><div class="l">White-label ready</div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Everything you need</span>
+      <h2>One platform, from first message to closed deal</h2>
+      <p class="lead center">Powerful tools that work together to capture, engage, and qualify every WhatsApp lead automatically.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V5M9 3h6" stroke-linecap="round"/><circle cx="9" cy="13" r="1" fill="currentColor"/><circle cx="15" cy="13" r="1" fill="currentColor"/></svg></div>
+        <h3>AI Auto-Replies</h3>
+        <p>Powered by OpenAI. Each business sets its own prompt, tone, language, and model — instant, human-like replies around the clock.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v6l-4-2v-4L3 5z" stroke-linejoin="round"/></svg></div>
+        <h3>Conversation Funnels</h3>
+        <p>Reply-driven flows that ask questions, branch on answers, and update leads. Build them by hand, from a sample, or generate one with AI.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4" stroke-linecap="round"/></svg></div>
+        <h3>Message Templates</h3>
+        <p>Sync approved WhatsApp templates from Meta. Start chats outside the 24-hour window, re-engage leads, or send personalised broadcasts.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div>
+        <h3>Lead Scoring & Qualification</h3>
+        <p>Every conversation is scored automatically and classified Hot / Warm / Cold — so your team always knows who to call first.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" stroke-linejoin="round"/></svg></div>
+        <h3>Automations</h3>
+        <p>Trigger actions on new leads, keywords, or status changes — send a message, start a funnel, tag a lead, or update its status, hands-free.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 20a2 2 0 0 0 3 0" stroke-linecap="round"/></svg></div>
+        <h3>Smart Notifications</h3>
+        <p>Instant alerts for delivery failures and key events — in the app bell and a full history page, so nothing slips through.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2>From "Hi" to a qualified lead — automatically</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Customer messages</h3><p>A lead texts your WhatsApp number. WALE captures them instantly — no lead is ever missed.</p></div>
+      <div class="step"><div class="num">2</div><h3>AI replies</h3><p>The AI answers in your voice, or a funnel guides the chat with the right questions.</p></div>
+      <div class="step"><div class="num">3</div><h3>Lead is scored</h3><p>Answers are saved, the lead is scored and tagged Hot / Warm / Cold in real time.</p></div>
+      <div class="step"><div class="num">4</div><h3>You close</h3><p>Your team sees prioritised, qualified leads with the full conversation and context.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE SPLITS -->
+<section>
+  <div class="wrap">
+
+    <div class="split">
+      <div>
+        <span class="eyebrow">AI that sells</span>
+        <h2>Conversations that feel human</h2>
+        <p class="lead">Connect your OpenAI key and WALE handles the talking — qualifying leads, answering questions, and following your business rules.</p>
+        <ul class="feat-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Custom system prompt, model &amp; reply language per business</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Live variables like <code>{lead_name}</code> &amp; <code>{business_name}</code></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Pause AI anytime to reply personally</li>
+        </ul>
+      </div>
+      <div class="visual">
+        <div class="mini"><div class="d" style="background:rgba(37,211,102,.15);color:#128C7E"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V5" stroke-linecap="round"/></svg></div><div><b>AI Auto-Reply</b><br><span>Answering leads 24/7</span></div><span class="pill" style="margin-left:auto;background:rgba(37,211,102,.15);color:#0b7a6d">ON</span></div>
+        <div class="mini"><div class="d" style="background:rgba(245,158,11,.15);color:#d97706"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></div><div><b>Avg. response</b><br><span>Under 2 seconds</span></div></div>
+        <div style="margin-top:14px">
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)"><span>Lead score</span><b style="color:var(--ink)">82 / 100 · Hot</b></div>
+          <div class="bar"><i style="width:82%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split rev">
+      <div class="visual">
+        <div class="mini"><div class="d" style="background:rgba(99,102,241,.15);color:#6366f1"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v6l-4-2v-4L3 5z" stroke-linejoin="round"/></svg></div><div><b>Welcome &amp; greet</b><br><span>Message step</span></div></div>
+        <div class="mini"><div class="d" style="background:rgba(37,211,102,.15);color:#128C7E"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 10h8M8 14h5" stroke-linecap="round"/><rect x="3" y="4" width="18" height="16" rx="3"/></svg></div><div><b>Own or rent?</b><br><span>Question · branches</span></div></div>
+        <div class="mini"><div class="d" style="background:rgba(245,158,11,.15);color:#d97706"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.8 5.7 21l2.3-7.2-6-4.4h7.6L12 2z" stroke-linejoin="round"/></svg></div><div><b>Tag as “Hot lead”</b><br><span>Action step</span></div></div>
+      </div>
+      <div>
+        <span class="eyebrow">No-code funnels</span>
+        <h2>Guide every lead down the right path</h2>
+        <p class="lead">Build reply-driven funnels that ask, branch, and act — or let AI generate a complete funnel from a description or a flowchart image.</p>
+        <ul class="feat-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Message, question, action &amp; branching steps</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> AI Funnel Generator + ready-made sample</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Auto-collect answers &amp; update leads</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="split">
+      <div>
+        <span class="eyebrow">Insights</span>
+        <h2>Know exactly what's working</h2>
+        <p class="lead">A real-time dashboard and analytics show leads, conversations, and conversion trends — so you can double down on what converts.</p>
+        <ul class="feat-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Leads, conversations &amp; conversion charts</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Lead status pipeline at a glance</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Searchable leads with notes &amp; history</li>
+        </ul>
+      </div>
+      <div class="visual">
+        <div style="display:flex;align-items:flex-end;gap:10px;height:150px;padding:8px 4px">
+          <div class="bar" style="width:100%;height:60%;background:transparent;display:flex;align-items:flex-end"><i style="width:100%;height:55%"></i></div>
+          <div class="bar" style="width:100%;height:80%;background:transparent;display:flex;align-items:flex-end"><i style="width:100%;height:72%"></i></div>
+          <div class="bar" style="width:100%;height:100%;background:transparent;display:flex;align-items:flex-end"><i style="width:100%;height:90%"></i></div>
+          <div class="bar" style="width:100%;height:70%;background:transparent;display:flex;align-items:flex-end"><i style="width:100%;height:64%"></i></div>
+          <div class="bar" style="width:100%;height:95%;background:transparent;display:flex;align-items:flex-end"><i style="width:100%;height:88%"></i></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:8px">
+          <div><div style="font-size:1.4rem;font-weight:800">1,240</div><span style="font-size:.78rem;color:var(--muted)">Leads</span></div>
+          <div><div style="font-size:1.4rem;font-weight:800;color:#0b7a6d">38%</div><span style="font-size:.78rem;color:var(--muted)">Conversion</span></div>
+          <div><div style="font-size:1.4rem;font-weight:800">6,910</div><span style="font-size:.78rem;color:var(--muted)">Messages</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOR RESELLERS -->
+<section id="reseller" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Built to resell</span>
+      <h2>Launch your own WhatsApp SaaS</h2>
+      <p class="lead center">WALE is fully multi-tenant and white-label. Onboard unlimited businesses, charge them monthly, and make it your brand.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V8l6-4 6 4v13M9 21v-5h4v5M15 11h6v10" stroke-linejoin="round"/></svg></div>
+        <h3>Multi-Tenant</h3>
+        <p>Each business connects its own WhatsApp, OpenAI key, and SMTP. Their data, limits, and costs stay separate.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Plans &amp; Payments</h3>
+        <p>Public pricing page, subscription plans, and PayPal checkout with automatic account provisioning — sell on autopilot.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13" cy="7" r="3"/><path d="M3 21c0-4 3-6 7-6M14 14l6 6M20 14l-6 6" stroke-linecap="round"/></svg></div>
+        <h3>Full White-Label</h3>
+        <p>Your logo, colours, favicon, and app name across the whole platform. Your customers only ever see your brand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REQUIREMENTS -->
+<section class="alt">
+  <div class="wrap sec-head" style="margin-bottom:0">
+    <span class="eyebrow">Easy to deploy</span>
+    <h2>Runs on standard PHP hosting</h2>
+    <p class="lead center">Built on CodeIgniter 4. Upload, set up a database, and you're live — dependencies are bundled, no build step, clean readable code.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px">
+      <span class="pill" style="background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:8px 16px">PHP 8.2+</span>
+      <span class="pill" style="background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:8px 16px">MySQL / MariaDB</span>
+      <span class="pill" style="background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:8px 16px">Bundled dependencies</span>
+      <span class="pill" style="background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:8px 16px">Clean source · no encryption</span>
+      <span class="pill" style="background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:8px 16px">Full documentation</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-final">
+  <div class="wrap">
+    <div class="box">
+      <h2>Ready to see WALE in action?</h2>
+      <p class="lead center">Explore the full admin panel, or read the docs to see how everything fits together.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="login" data-cta="demo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Launch Live Demo
+        </a>
+        <a class="btn btn-lgt" href="user-guide.html" data-cta="docs">Read the Docs</a>
+        <a class="btn btn-ghost" href="#" data-cta="buy">Get WALE</a>
+      </div>
+      <p style="margin-top:20px;font-size:.85rem;color:rgba(255,255,255,.8)">Demo: <code style="background:rgba(0,0,0,.25);padding:2px 8px;border-radius:6px">admin@wale.dev</code> / <code style="background:rgba(0,0,0,.25);padding:2px 8px;border-radius:6px">Admin@1234</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a8.5 8.5 0 0 0-7.4 12.7L3.5 20l4.4-1.1A8.5 8.5 0 1 0 12 3z" fill="#fff"/></svg></span>
+      WALE
+    </div>
+    <p>WhatsApp AI Lead Engine &nbsp;·&nbsp; <a href="user-guide.html" data-cta="docs">Documentation</a> &nbsp;·&nbsp; <a href="login" data-cta="demo">Live Demo</a></p>
+    <p style="margin-top:10px;opacity:.6">© 2026 WALE. Built with CodeIgniter 4.</p>
+  </div>
+</footer>
+
+</body>
+</html>

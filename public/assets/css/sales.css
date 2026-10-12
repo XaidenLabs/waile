@@ -1,0 +1,19 @@
+/* sales.css — public sales/pricing pages. The brand color is injected as the
+   --brand custom property (the only dynamic bit) by the page's inline :root rule. */
+
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #2d3748; }
+
+.navbar-brand img { max-height: 36px; max-width: 170px; }
+
+.btn-brand { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn-brand:hover { filter: brightness(.93); background: var(--brand); border-color: var(--brand); color: #fff; }
+
+.text-brand { color: var(--brand) !important; }
+
+.hero { background: linear-gradient(135deg, var(--brand) 0%, #0f1923 100%); color: #fff; }
+
+.price-card { border: 1px solid #e2e8f0; border-radius: 14px; transition: .18s; }
+.price-card:hover { box-shadow: 0 12px 32px rgba(0, 0, 0, .08); transform: translateY(-3px); }
+.price-card.featured { border: 2px solid var(--brand); }
+
+.feature-check { color: var(--brand); }

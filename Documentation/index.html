@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WALE — User Guide</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="icon" type="image/png" href="https://wale.pixalab.ai/favicon-32x32.png">
+<style>
+  /* ── Reset & Base ─────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:   #25D366;
+    --dark:    #0f1923;
+    --accent:  #128C7E;
+    --light:   #f4f6f9;
+    --border:  #e2e8f0;
+    --text:    #2d3748;
+    --muted:   #718096;
+    --warn:    #f59e0b;
+    --danger:  #ef4444;
+    --info:    #3b82f6;
+    --sidebar: 280px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--light);
+    display: flex;
+  }
+
+  /* ── Sidebar ──────────────────────────────────────────── */
+  #sidebar {
+    width: var(--sidebar);
+    min-height: 100vh;
+    background: var(--dark);
+    color: #fff;
+    position: fixed;
+    top: 0; left: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sidebar .brand {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  #sidebar .brand h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--green);
+  }
+
+  #sidebar .brand p {
+    font-size: .78rem;
+    color: rgba(255,255,255,.45);
+    margin-top: 2px;
+  }
+
+  #sidebar nav { flex: 1; padding: 12px 0; }
+
+  #sidebar nav .nav-section {
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+    padding: 16px 20px 6px;
+  }
+
+  #sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    font-size: .88rem;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+
+  #sidebar nav a:hover,
+  #sidebar nav a.active {
+    color: #fff;
+    background: rgba(255,255,255,.06);
+    border-left-color: var(--green);
+  }
+
+  #sidebar nav a i { font-size: 1rem; width: 18px; }
+
+  #sidebar .version {
+    padding: 16px 20px;
+    font-size: .72rem;
+    color: rgba(255,255,255,.25);
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+
+  /* ── Main Content ─────────────────────────────────────── */
+  #main {
+    margin-left: var(--sidebar);
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  /* ── Top Bar ──────────────────────────────────────────── */
+  #topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #topbar .breadcrumb {
+    font-size: .82rem;
+    color: var(--muted);
+  }
+
+  #topbar .badge-version {
+    background: var(--green);
+    color: #fff;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: .72rem;
+    font-weight: 600;
+  }
+
+  /* ── Sections ─────────────────────────────────────────── */
+  .section {
+    padding: 48px 40px 64px;
+    max-width: 860px;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Hero ─────────────────────────────────────────────── */
+  #hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #1a2f3e 100%);
+    padding: 60px 40px;
+    color: #fff;
+    max-width: 100%;
+  }
+
+  #hero .tag {
+    display: inline-block;
+    background: rgba(37,211,102,.15);
+    color: var(--green);
+    border: 1px solid rgba(37,211,102,.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: .78rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  #hero h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  #hero h2 span { color: var(--green); }
+
+  #hero p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,.65);
+    max-width: 600px;
+    margin-bottom: 28px;
+  }
+
+  .hero-cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .hero-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .hero-card i {
+    font-size: 1.4rem;
+    color: var(--green);
+    margin-top: 2px;
+  }
+
+  .hero-card strong { display: block; font-size: .9rem; color: #fff; }
+  .hero-card span { font-size: .78rem; color: rgba(255,255,255,.5); }
+
+  /* ── Section Headings ─────────────────────────────────── */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .section-title .icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .section-title h2 {
+    font-size: 1.55rem;
+    font-weight: 700;
+  }
+
+  .section-subtitle {
+    color: var(--muted);
+    font-size: .95rem;
+    margin-bottom: 28px;
+    padding-left: 54px;
+  }
+
+  /* ── Steps ────────────────────────────────────────────── */
+  .steps { list-style: none; }
+
+  .steps li {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: .85rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-body strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .step-body p { color: var(--muted); font-size: .92rem; }
+
+  /* ── Callouts ─────────────────────────────────────────── */
+  .callout {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    display: flex;
+    gap: 12px;
+    font-size: .9rem;
+  }
+
+  .callout i { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  .callout-tip    { background: #ecfdf5; border-left: 4px solid #10b981; color: #065f46; }
+  .callout-warn   { background: #fffbeb; border-left: 4px solid var(--warn); color: #92400e; }
+  .callout-info   { background: #eff6ff; border-left: 4px solid var(--info); color: #1e40af; }
+  .callout-danger { background: #fef2f2; border-left: 4px solid var(--danger); color: #991b1b; }
+
+  /* ── Field Descriptions ───────────────────────────────── */
+  .field-list { list-style: none; margin: 16px 0; }
+
+  .field-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    font-size: .92rem;
+  }
+
+  .field-list li:last-child { border-bottom: none; }
+
+  .field-name {
+    font-weight: 600;
+    min-width: 180px;
+    color: var(--text);
+    font-family: 'Consolas', monospace;
+    font-size: .85rem;
+    padding-top: 2px;
+  }
+
+  .field-list .required { color: var(--danger); font-size: .72rem; font-weight: 700; margin-left: 4px; vertical-align: middle; }
+  .field-list .optional { color: var(--muted); font-size: .72rem; margin-left: 4px; }
+
+  /* ── Screen Mock ──────────────────────────────────────── */
+  .screen-mock {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06);
+  }
+
+  .screen-mock .mock-bar {
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mock-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .screen-mock .mock-body { padding: 20px; }
+
+  /* ── Badges ───────────────────────────────────────────── */
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: .72rem;
+    font-weight: 700;
+  }
+
+  .badge-green  { background: #dcfce7; color: #166534; }
+  .badge-yellow { background: #fef9c3; color: #854d0e; }
+  .badge-red    { background: #fee2e2; color: #991b1b; }
+  .badge-blue   { background: #dbeafe; color: #1e40af; }
+  .badge-gray   { background: #f1f5f9; color: #475569; }
+
+  /* ── Table ────────────────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 16px 0; }
+  th { background: var(--light); padding: 10px 14px; text-align: left; font-size: .8rem; color: var(--muted); font-weight: 600; border-bottom: 2px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+
+  /* ── FAQ ──────────────────────────────────────────────── */
+  .faq-item { margin-bottom: 16px; }
+
+  .faq-item summary {
+    font-weight: 600;
+    cursor: pointer;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .95rem;
+  }
+
+  .faq-item summary::after { content: '+'; font-size: 1.2rem; color: var(--muted); }
+  .faq-item[open] summary::after { content: '−'; }
+
+  .faq-item[open] summary {
+    border-radius: 8px 8px 0 0;
+    border-bottom-color: transparent;
+  }
+
+  .faq-body {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 14px 16px;
+    font-size: .9rem;
+    color: var(--muted);
+  }
+
+  /* ── Print ────────────────────────────────────────────── */
+  @media print {
+    #sidebar, #topbar { display: none; }
+    #main { margin-left: 0; }
+    .section { padding: 24px 0; page-break-inside: avoid; }
+  }
+
+  /* ── Responsive ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .section { padding: 32px 20px; }
+    #hero { padding: 40px 20px; }
+    #topbar { padding: 12px 20px; }
+    .hero-cards { flex-direction: column; }
+    .field-name { min-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div class="brand">
+    <h1><i class="bi bi-whatsapp"></i> WALE</h1>
+    <p>WhatsApp AI Lead Engine — User Guide</p>
+  </div>
+
+  <nav>
+    <div class="nav-section">Introduction</div>
+    <a href="#intro"><i class="bi bi-house-door"></i> What is WALE?</a>
+    <a href="#how-it-works"><i class="bi bi-diagram-3"></i> How It Works</a>
+
+    <div class="nav-section">Setup</div>
+    <a href="#login"><i class="bi bi-box-arrow-in-right"></i> Logging In</a>
+    <a href="#whatsapp-setup"><i class="bi bi-whatsapp"></i> Connect WhatsApp</a>
+    <a href="#meta-setup"><i class="bi bi-gear-wide-connected"></i> Meta Setup (Step-by-Step)</a>
+    <a href="#ai-setup"><i class="bi bi-robot"></i> Configure AI</a>
+
+    <div class="nav-section">Daily Use</div>
+    <a href="#dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a href="#leads"><i class="bi bi-people"></i> Managing Leads</a>
+    <a href="#conversations"><i class="bi bi-chat-dots"></i> Conversations</a>
+    <a href="#funnels"><i class="bi bi-funnel"></i> Funnels</a>
+    <a href="#automations"><i class="bi bi-lightning-charge"></i> Automations</a>
+    <a href="#templates"><i class="bi bi-file-earmark-text"></i> Message Templates</a>
+    <a href="#analytics"><i class="bi bi-bar-chart-line"></i> Analytics</a>
+    <a href="#notifications"><i class="bi bi-bell"></i> Notifications</a>
+
+    <div class="nav-section">Account</div>
+    <a href="#profile"><i class="bi bi-person-circle"></i> Profile & Settings</a>
+    <a href="#plan"><i class="bi bi-gem"></i> My Plan & Usage</a>
+
+    <div class="nav-section">Platform Admin</div>
+    <a href="#admin-overview"><i class="bi bi-shield-lock"></i> Admin Overview</a>
+    <a href="#tenants"><i class="bi bi-people"></i> Managing Tenants</a>
+    <a href="#plans-admin"><i class="bi bi-card-list"></i> Plans</a>
+    <a href="#sales-admin"><i class="bi bi-cart-check"></i> Sales &amp; Payments</a>
+    <a href="#orders-admin"><i class="bi bi-receipt"></i> Orders</a>
+    <a href="#email-admin"><i class="bi bi-envelope-at"></i> Email / SMTP</a>
+    <a href="#branding-admin"><i class="bi bi-palette"></i> Branding</a>
+
+    <div class="nav-section">Help</div>
+    <a href="#faq"><i class="bi bi-question-circle"></i> FAQ</a>
+  </nav>
+
+  <div class="version">WALE v1.1 &nbsp;·&nbsp; Last updated July 2026</div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════
+     MAIN
+════════════════════════════════════════════════════════ -->
+<div id="main">
+
+  <!-- Top Bar -->
+  <div id="topbar">
+    <span class="breadcrumb"><i class="bi bi-book me-1"></i> WALE User Guide</span>
+    <span class="badge-version">Version 1.1</span>
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <div id="hero">
+    <div class="tag"><i class="bi bi-whatsapp me-1"></i> WhatsApp AI Lead Engine</div>
+    <h2>Welcome to <span>WALE</span></h2>
+    <p>
+      This guide will walk you through everything you need to know to set up and use WALE —
+      from connecting your WhatsApp number to watching the AI qualify leads automatically.
+      No technical knowledge required.
+    </p>
+
+    <div class="hero-cards">
+      <div class="hero-card">
+        <i class="bi bi-1-circle-fill"></i>
+        <div>
+          <strong>Connect WhatsApp</strong>
+          <span>Link your business number</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <i class="bi bi-2-circle-fill"></i>
+        <div>
+          <strong>Configure AI</strong>
+          <span>Set your AI personality</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <i class="bi bi-3-circle-fill"></i>
+        <div>
+          <strong>Watch It Work</strong>
+          <span>AI replies &amp; qualifies leads</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 1 — WHAT IS WALE
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="intro">
+    <div class="section-title">
+      <div class="icon" style="background:#ecfdf5;color:#059669"><i class="bi bi-info-circle-fill"></i></div>
+      <h2>What is WALE?</h2>
+    </div>
+    <p class="section-subtitle">A plain-English explanation of what this software does.</p>
+
+    <p>
+      <strong>WALE</strong> stands for <em>WhatsApp AI Lead Engine</em>. Think of it as a smart
+      assistant for your WhatsApp business number that never sleeps.
+    </p>
+
+    <p style="margin-top:14px">
+      When a customer messages your WhatsApp number, WALE:
+    </p>
+
+    <ul class="steps" style="margin-top:18px">
+      <li>
+        <div class="step-num"><i class="bi bi-envelope-open" style="font-size:.8rem"></i></div>
+        <div class="step-body">
+          <strong>Receives the message automatically</strong>
+          <p>No need to check your phone. WALE picks up every message the moment it arrives.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"><i class="bi bi-robot" style="font-size:.8rem"></i></div>
+        <div class="step-body">
+          <strong>Replies using Artificial Intelligence</strong>
+          <p>The AI understands the customer's message and replies in a natural, conversational way — just like a real human sales agent.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"><i class="bi bi-person-check" style="font-size:.8rem"></i></div>
+        <div class="step-body">
+          <strong>Qualifies the lead</strong>
+          <p>After a few messages, WALE automatically decides whether this customer is a <em>Hot Lead</em> (very interested), <em>Warm</em>, <em>Cold</em>, or if they have been converted or lost.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"><i class="bi bi-bell" style="font-size:.8rem"></i></div>
+        <div class="step-body">
+          <strong>Keeps everything in one place</strong>
+          <p>Every lead, every conversation, and every AI reply is saved in your WALE dashboard so you can review them at any time.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>Think of it this way:</strong> WALE is like hiring a 24/7 sales agent for WhatsApp who never takes a break, never misses a message, and automatically tells you which customers are most likely to buy.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 2 — HOW IT WORKS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="how-it-works">
+    <div class="section-title">
+      <div class="icon" style="background:#eff6ff;color:#3b82f6"><i class="bi bi-diagram-3-fill"></i></div>
+      <h2>How It Works — The Big Picture</h2>
+    </div>
+    <p class="section-subtitle">The journey of a customer message from WhatsApp to your dashboard.</p>
+
+    <div class="screen-mock">
+      <div class="mock-bar">
+        <div class="dot" style="background:#ef4444"></div>
+        <div class="dot" style="background:#f59e0b"></div>
+        <div class="dot" style="background:#22c55e"></div>
+        <span style="margin-left:8px;font-size:.78rem;color:#94a3b8">Message Journey</span>
+      </div>
+      <div class="mock-body">
+        <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;gap:8px;">
+
+          <div style="text-align:center;padding:12px 16px;background:#dcfce7;border-radius:10px;flex:1;min-width:100px">
+            <i class="bi bi-phone" style="font-size:1.6rem;color:#16a34a;display:block;margin-bottom:6px"></i>
+            <strong style="font-size:.82rem">Customer</strong>
+            <p style="font-size:.72rem;color:#666;margin-top:2px">Sends a WhatsApp message</p>
+          </div>
+
+          <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:1.2rem"></i>
+
+          <div style="text-align:center;padding:12px 16px;background:#dbeafe;border-radius:10px;flex:1;min-width:100px">
+            <i class="bi bi-cloud-arrow-down" style="font-size:1.6rem;color:#2563eb;display:block;margin-bottom:6px"></i>
+            <strong style="font-size:.82rem">Meta</strong>
+            <p style="font-size:.72rem;color:#666;margin-top:2px">Delivers message to WALE</p>
+          </div>
+
+          <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:1.2rem"></i>
+
+          <div style="text-align:center;padding:12px 16px;background:#fef9c3;border-radius:10px;flex:1;min-width:100px">
+            <i class="bi bi-robot" style="font-size:1.6rem;color:#d97706;display:block;margin-bottom:6px"></i>
+            <strong style="font-size:.82rem">AI Engine</strong>
+            <p style="font-size:.72rem;color:#666;margin-top:2px">Generates a smart reply</p>
+          </div>
+
+          <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:1.2rem"></i>
+
+          <div style="text-align:center;padding:12px 16px;background:#dcfce7;border-radius:10px;flex:1;min-width:100px">
+            <i class="bi bi-send-check" style="font-size:1.6rem;color:#16a34a;display:block;margin-bottom:6px"></i>
+            <strong style="font-size:.82rem">Reply Sent</strong>
+            <p style="font-size:.72rem;color:#666;margin-top:2px">Customer receives the reply</p>
+          </div>
+
+          <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:1.2rem"></i>
+
+          <div style="text-align:center;padding:12px 16px;background:#f3e8ff;border-radius:10px;flex:1;min-width:100px">
+            <i class="bi bi-person-check" style="font-size:1.6rem;color:#7c3aed;display:block;margin-bottom:6px"></i>
+            <strong style="font-size:.82rem">Lead Saved</strong>
+            <p style="font-size:.72rem;color:#666;margin-top:2px">Stored &amp; scored in dashboard</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        All of this happens <strong>automatically</strong> in seconds. You only need to set it up once.
+        After that, WALE handles every new customer message on its own.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 3 — LOGIN
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="login">
+    <div class="section-title">
+      <div class="icon" style="background:#fff7ed;color:#ea580c"><i class="bi bi-box-arrow-in-right"></i></div>
+      <h2>Logging In</h2>
+    </div>
+    <p class="section-subtitle">How to access your WALE dashboard.</p>
+
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Open your browser</strong>
+          <p>Use Google Chrome, Firefox, or any modern browser. Type your WALE URL in the address bar and press Enter.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Enter your Email and Password</strong>
+          <p>Type your login email and password (sent to you by email when your account was created). Click <strong>Sign In</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>You are now on the Dashboard</strong>
+          <p>After logging in successfully, you will see your main dashboard with summary numbers and recent activity.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div>
+        <strong>Forgot your password?</strong> Click the <em>"Forgot Password"</em> link on the login page.
+        You will receive an email with a link to reset it. Check your spam folder if you don't see it.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 4 — WHATSAPP SETUP
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="whatsapp-setup">
+    <div class="section-title">
+      <div class="icon" style="background:#dcfce7;color:#16a34a"><i class="bi bi-whatsapp"></i></div>
+      <h2>Connecting Your WhatsApp</h2>
+    </div>
+    <p class="section-subtitle">Link your Meta WhatsApp Business number to WALE. Do this first before anything else.</p>
+
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        <strong>Before you begin:</strong> WALE connects to your number through <strong>Meta's WhatsApp Cloud API</strong>. You'll need four things from Meta: a <strong>Phone Number ID</strong>, a <strong>WABA ID</strong>, a <strong>Permanent Access Token</strong>, and a <strong>Verify Token</strong> that you make up yourself.
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-signpost-2-fill"></i>
+      <div>
+        <strong>First time doing the Meta setup?</strong> Don't worry — the full, click-by-click walkthrough is in the next section:
+        <a href="#meta-setup"><strong>Meta Setup (Step-by-Step)</strong></a>. It covers creating the app, generating a permanent token, verifying your number, configuring the webhook, and going live. Do that first, then come back here to plug your credentials into WALE.
+      </div>
+    </div>
+
+    <div class="callout callout-danger">
+      <i class="bi bi-shield-exclamation"></i>
+      <div>
+        <strong>Keep your Access Token private.</strong> This token is like a password. Never share it with anyone, never post it in a chat, and never include it in a screenshot. WALE encrypts it automatically for your safety.
+      </div>
+    </div>
+
+    <h3 style="margin:28px 0 16px;font-size:1.1rem">Entering your credentials into WALE</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Go to Settings → WhatsApp</strong>
+          <p>In the WALE sidebar, click <strong>WhatsApp</strong> under the Settings section.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Fill in the form</strong>
+          <p>Enter the details you copied from Meta. See the field descriptions below.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Click "Save WhatsApp Config"</strong>
+          <p>Once saved, the page will show a green "Connected" banner if everything is correct.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h3 style="margin:24px 0 12px;font-size:1rem;color:var(--muted)">Field Descriptions</h3>
+    <ul class="field-list">
+      <li>
+        <span class="field-name">Phone Number ID <span class="required">required</span></span>
+        <span>A long number (e.g. <em>123456789012345</em>) found on the Meta API Setup page. It identifies your WhatsApp phone number.</span>
+      </li>
+      <li>
+        <span class="field-name">WABA ID <span class="optional">optional</span></span>
+        <span>WhatsApp Business Account ID. Also found on the same Meta page. Used for advanced features.</span>
+      </li>
+      <li>
+        <span class="field-name">Access Token <span class="required">required</span></span>
+        <span>The permanent token you generated. It starts with <code>EAABxxxx...</code> or <code>sk-...</code>. WALE encrypts this immediately after saving.</span>
+      </li>
+      <li>
+        <span class="field-name">Webhook Verify Token <span class="optional">optional</span></span>
+        <span>A secret word or phrase you choose yourself (e.g. <em>my_secret_wale_2026</em>). You will enter this same value in Meta's webhook settings so Meta can confirm it's really you.</span>
+      </li>
+      <li>
+        <span class="field-name">Webhook URL <span class="optional">read-only</span></span>
+        <span>This is the URL you paste into Meta's webhook section. Click the copy button next to it. Do not change this value — it is generated by WALE automatically.</span>
+      </li>
+    </ul>
+
+    <h3 style="margin:28px 0 16px;font-size:1.1rem">Configuring the Webhook</h3>
+    <p style="color:var(--muted);font-size:.92rem">
+      Copy the <em>Webhook URL</em> from the WALE WhatsApp settings page, paste it into Meta's Webhook section along with your <em>Verify Token</em>, click <strong>Verify and Save</strong>, then turn on the <code>messages</code> subscription. The full click-by-click version is in
+      <a href="#meta-setup"><strong>Meta Setup → Part E</strong></a>.
+    </p>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-check-circle-fill"></i>
+      <div>
+        <strong>How to confirm it worked:</strong> Send a WhatsApp message to your business number from any phone. Within a few seconds, you should see a new lead appear in WALE → All Leads.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 4B — META SETUP (STEP BY STEP)
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="meta-setup">
+    <div class="section-title">
+      <div class="icon" style="background:#eef2ff;color:#4f46e5"><i class="bi bi-gear-wide-connected"></i></div>
+      <h2>Meta Setup — Step by Step</h2>
+    </div>
+    <p class="section-subtitle">The complete, click-by-click guide to everything you do inside Meta/Facebook to connect your WhatsApp number to WALE. Follow the parts in order.</p>
+
+    <div class="callout callout-info">
+      <i class="bi bi-map-fill"></i>
+      <div>
+        <strong>The whole journey, at a glance:</strong>
+        <strong>A.</strong> Create your app &nbsp;→&nbsp;
+        <strong>B.</strong> Add WhatsApp &amp; copy your IDs &nbsp;→&nbsp;
+        <strong>C.</strong> Generate a permanent token &nbsp;→&nbsp;
+        <strong>D.</strong> Add &amp; verify your number &nbsp;→&nbsp;
+        <strong>E.</strong> Configure the webhook &nbsp;→&nbsp;
+        <strong>F.</strong> Go live &nbsp;→&nbsp;
+        <strong>G.</strong> Plug into WALE &amp; test.
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-stopwatch-fill"></i>
+      <div>
+        <strong>Two stages:</strong> Parts <strong>A–E + G</strong> get WhatsApp working <em>in test mode</em> (you can message a few numbers you add yourself) in about 20–30 minutes. Part <strong>F</strong> (Business Verification + App Review) is what lets you message <em>any</em> customer in production — start it early because Meta's review can take several days.
+      </div>
+    </div>
+
+    <!-- ── Prerequisites ─────────────────────────────── -->
+    <h3 style="margin:32px 0 14px;font-size:1.15rem"><i class="bi bi-clipboard-check me-2" style="color:#4f46e5"></i>Before you begin</h3>
+    <ul class="field-list">
+      <li>
+        <span class="field-name">Facebook account</span>
+        <span>A personal Facebook account is used only to log in to Meta's developer tools. Your customers never see it.</span>
+      </li>
+      <li>
+        <span class="field-name">2-Factor Auth</span>
+        <span>Meta <strong>requires</strong> two-factor authentication on that account before you can create apps or tokens. Turn it on at <em>Facebook → Settings &amp; Privacy → Settings → Accounts Center → Password and security → Two-factor authentication</em>.</span>
+      </li>
+      <li>
+        <span class="field-name">A clean phone number</span>
+        <span>The business number you'll use <strong>must not be active</strong> on the normal WhatsApp or WhatsApp Business app. If it is, delete that WhatsApp account on the phone first, or use a fresh number.</span>
+      </li>
+      <li>
+        <span class="field-name">~30 minutes</span>
+        <span>For the test-mode setup. Business verification (Part F) is submitted once and reviewed by Meta separately.</span>
+      </li>
+    </ul>
+
+    <!-- ── PART A ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-1-circle-fill me-2" style="color:#4f46e5"></i>Part A — Create your Meta App</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Open the developer site</strong>
+          <p>Go to <code>developers.facebook.com</code> and log in with your Facebook account. If it's your first time, click <strong>Get Started</strong> and accept the terms.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Create a new app</strong>
+          <p>Top-right → <strong>My Apps</strong> → <strong>Create App</strong>. If asked "What do you want your app to do?", choose <strong>Other</strong> → <strong>Next</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Choose the "Business" app type</strong>
+          <p>Select <strong>Business</strong> → <strong>Next</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Fill in the details</strong>
+          <p>Enter an <strong>App name</strong> (e.g. "MyCompany WALE"), your contact email, and link your <strong>Business portfolio</strong> (create one if the dropdown is empty). Click <strong>Create app</strong> and re-enter your password if prompted.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>You're on the App Dashboard</strong>
+          <p>Your <strong>App ID</strong> is shown under <em>App settings → Basic</em>. Keep this tab open — you'll be coming back here.</p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- ── PART B ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-2-circle-fill me-2" style="color:#4f46e5"></i>Part B — Add WhatsApp &amp; copy your IDs</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Add the WhatsApp product</strong>
+          <p>On the dashboard, scroll to <strong>Add products to your app</strong>, find <strong>WhatsApp</strong>, and click <strong>Set up</strong>. Link your Business portfolio if asked.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Open WhatsApp → API Setup</strong>
+          <p>In the left sidebar, expand <strong>WhatsApp</strong> and click <strong>API Setup</strong> (sometimes called <em>Quickstart</em>).</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Copy your two IDs</strong>
+          <p>On this page Meta gives you a free <strong>test number</strong>. Copy:</p>
+          <ul style="margin-top:6px;padding-left:16px;color:var(--muted);font-size:.9rem;line-height:1.8">
+            <li><strong>Phone number ID</strong> — the long number shown under the "From" number.</li>
+            <li><strong>WhatsApp Business Account ID (WABA ID)</strong> — shown near the top of the page.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Add a test recipient</strong>
+          <p>Under the <strong>To</strong> field, add your own personal WhatsApp number and confirm the code Meta sends. In test mode you can only message numbers added here.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-clock-history"></i>
+      <div>
+        <strong>The token on this page is temporary — it expires in 24 hours.</strong> It's fine for a one-off test, but if you paste it into WALE your connection will stop working tomorrow. For a connection that lasts, generate a <strong>permanent token</strong> in Part C.
+      </div>
+    </div>
+
+    <!-- ── PART C ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-3-circle-fill me-2" style="color:#4f46e5"></i>Part C — Generate a Permanent Access Token</h3>
+    <p style="color:var(--muted);font-size:.92rem">A permanent token belongs to a <strong>System User</strong> (a non-human "robot" account inside your business) and can be set to never expire. This is the token WALE uses to send messages on your behalf.</p>
+    <ol class="steps" style="margin-top:14px">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Open Business Settings</strong>
+          <p>Go to <code>business.facebook.com/settings</code> (or click the gear / <em>Business Settings</em> from your app). Make sure the correct business is selected top-left.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Create a System User</strong>
+          <p>Left menu → <strong>Users → System Users</strong> → <strong>Add</strong>. Give it a name like <em>"WALE Integration"</em>, set the role to <strong>Admin</strong>, and click <strong>Create</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Assign your assets to it</strong>
+          <p>Select the new System User → <strong>Assign assets</strong>. Assign both:</p>
+          <ul style="margin-top:6px;padding-left:16px;color:var(--muted);font-size:.9rem;line-height:1.8">
+            <li><strong>Apps</strong> → your app → enable <em>Full control / Manage app</em>.</li>
+            <li><strong>WhatsApp accounts</strong> → your WABA → enable <em>Full control</em>.</li>
+          </ul>
+          <p style="margin-top:6px">Click <strong>Save changes</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Generate the token</strong>
+          <p>Still on the System User, click <strong>Generate new token</strong>. Choose your <strong>app</strong>, and for <strong>Token expiration</strong> select <strong>Never</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Tick the right permissions</strong>
+          <p>Check both <code>whatsapp_business_messaging</code> and <code>whatsapp_business_management</code>, then click <strong>Generate token</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <strong>Copy the token immediately</strong>
+          <p>It starts with <code>EAA…</code> and is shown <strong>only once</strong>. Copy it somewhere safe — this is your <em>Permanent Access Token</em> for WALE.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-danger">
+      <i class="bi bi-shield-lock-fill"></i>
+      <div>
+        <strong>Treat this token like a password.</strong> Anyone with it can send WhatsApp messages as your business. Never share it, post it in chat, or put it in a screenshot. WALE encrypts it (AES-256) the moment you save it.
+      </div>
+    </div>
+
+    <!-- ── PART D ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-4-circle-fill me-2" style="color:#4f46e5"></i>Part D — Add &amp; verify your business number</h3>
+    <p style="color:var(--muted);font-size:.92rem">The free test number is fine for trying things out, but to message real customers you add your own business number.</p>
+    <ol class="steps" style="margin-top:14px">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Open the phone number manager</strong>
+          <p>Go to <strong>WhatsApp → API Setup</strong> and click <strong>Add phone number</strong> (or open <em>WhatsApp Manager → Phone numbers → Add phone number</em>).</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Enter your business details</strong>
+          <p>Fill in your business display name and the phone number, then choose to verify by <strong>SMS</strong> or <strong>voice call</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Enter the verification code</strong>
+          <p>Type the code Meta sends to finish adding the number.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Copy this number's Phone Number ID</strong>
+          <p>Each number has its own <strong>Phone Number ID</strong>. Use <em>your business number's</em> ID in WALE (not the test number's) once you're ready to go live.</p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- ── PART E ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-5-circle-fill me-2" style="color:#4f46e5"></i>Part E — Configure the Webhook</h3>
+    <p style="color:var(--muted);font-size:.92rem">The webhook is how Meta delivers every incoming customer message to WALE. You set this up once.</p>
+    <ol class="steps" style="margin-top:14px">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Get the URL &amp; token from WALE</strong>
+          <p>In WALE, open <strong>Settings → WhatsApp</strong>. Type any secret phrase into <strong>Webhook Verify Token</strong> (e.g. <em>my_secret_wale_2026</em>) and click the copy button next to the <strong>Webhook URL</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Open the webhook settings in Meta</strong>
+          <p>In your app: <strong>WhatsApp → Configuration</strong>. Next to <em>Webhook</em>, click <strong>Edit</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Paste and verify</strong>
+          <p><strong>Callback URL</strong> = the WALE Webhook URL. <strong>Verify token</strong> = the exact phrase you set in WALE. Click <strong>Verify and save</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Subscribe to "messages"</strong>
+          <p>Still under <em>Configuration → Webhook fields</em>, click <strong>Manage</strong> and toggle <strong>messages</strong> ON. This is what makes incoming chats flow into WALE.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-globe"></i>
+      <div>
+        <strong>Your WALE site must be reachable over HTTPS</strong> for "Verify and save" to succeed. If verification fails, the most common causes are an <code>http://</code> (not <code>https://</code>) address, the site not being publicly accessible, or the verify token not matching exactly.
+      </div>
+    </div>
+
+    <!-- ── PART F ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-6-circle-fill me-2" style="color:#4f46e5"></i>Part F — Go Live for production</h3>
+    <p style="color:var(--muted);font-size:.92rem">While your app is in <strong>Development mode</strong>, you can only message the few numbers you added in Part B. To message <em>any</em> customer, your app must be <strong>Live</strong> with approved permissions.</p>
+    <ol class="steps" style="margin-top:14px">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Verify your business (start this first — it's slow)</strong>
+          <p>Business Settings → <strong>Security Center</strong> → <strong>Start verification</strong>. Submit your legal business documents (registration / trade licence / utility bill). Meta's review can take a few days to two weeks.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Request Advanced Access to the permissions</strong>
+          <p>App Dashboard → <strong>App Review → Permissions and Features</strong>. Request <strong>Advanced Access</strong> for <code>whatsapp_business_messaging</code> and <code>whatsapp_business_management</code>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Complete the basic app info</strong>
+          <p>App settings → Basic: add a <strong>Privacy Policy URL</strong>, an <strong>app icon</strong>, a category, and a short description. These are required before going live.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Switch the app to Live</strong>
+          <p>At the top of the App Dashboard, flip the mode toggle from <strong>Development</strong> to <strong>Live</strong>.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        <strong>Quick rule of thumb:</strong> if WALE works when you message it from your own (added) phone but <em>not</em> from a stranger's, you're still in Development mode — finish Part F to remove that limit.
+      </div>
+    </div>
+
+    <!-- ── PART G ────────────────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-7-circle-fill me-2" style="color:#4f46e5"></i>Part G — Plug into WALE &amp; test</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Enter your credentials</strong>
+          <p>In WALE: <strong>Settings → WhatsApp</strong>. Paste your <strong>Phone Number ID</strong>, <strong>WABA ID</strong>, <strong>Permanent Access Token</strong>, and the <strong>Verify Token</strong> (the same phrase from Part E). Click <strong>Save WhatsApp Config</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Check the green banner</strong>
+          <p>A green <strong>"WhatsApp Connected"</strong> banner means your credentials and webhook are good.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Send a real test message</strong>
+          <p>From another phone, send a WhatsApp message to your business number. Within seconds a new lead should appear in <strong>Leads → All Leads</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Turn on the AI</strong>
+          <p>Make sure you've added your OpenAI key and prompt in <a href="#ai-setup"><strong>Configure AI</strong></a> so WALE replies automatically. Without it, leads are still saved but no auto-reply is sent.</p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- ── Troubleshooting ───────────────────────────── -->
+    <h3 style="margin:36px 0 14px;font-size:1.15rem"><i class="bi bi-tools me-2" style="color:#4f46e5"></i>Troubleshooting common Meta errors</h3>
+    <table>
+      <thead>
+        <tr><th style="width:42%">Symptom</th><th>Cause &amp; fix</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Webhook "Verify and save" fails</strong></td>
+          <td>WALE not on HTTPS, not publicly reachable, or the verify token doesn't match exactly. Re-copy the token and confirm the URL opens in a browser.</td>
+        </tr>
+        <tr>
+          <td><strong>Connection stops working after ~1 day</strong></td>
+          <td>You pasted the temporary 24-hour token. Generate a <em>permanent</em> System User token (Part C) and re-save it in WALE.</td>
+        </tr>
+        <tr>
+          <td><strong>No leads appear when you message the number</strong></td>
+          <td>The <code>messages</code> webhook field isn't subscribed (Part E, step 4), or the wrong Phone Number ID is saved in WALE.</td>
+        </tr>
+        <tr>
+          <td><strong>Error: "Recipient phone number not in allowed list" (#131030)</strong></td>
+          <td>You're in Development mode. Either add that number under <em>API Setup → To</em>, or complete Part F to go Live.</td>
+        </tr>
+        <tr>
+          <td><strong>"Cannot register number / already in use"</strong></td>
+          <td>The number is still active on the consumer WhatsApp app. Delete that WhatsApp account on the phone, then add the number again.</td>
+        </tr>
+        <tr>
+          <td><strong>Leads save but the AI never replies</strong></td>
+          <td>OpenAI key missing/invalid, or AI auto-reply is OFF on the conversation. See <a href="#ai-setup">Configure AI</a> and the conversation's AI toggle.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-check-circle-fill"></i>
+      <div>
+        <strong>You only do this once.</strong> After the number is connected and the app is live, WALE keeps handling every message automatically — you won't need to touch the Meta dashboard again unless you add another number.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 5 — AI SETUP
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="ai-setup">
+    <div class="section-title">
+      <div class="icon" style="background:#fef9c3;color:#d97706"><i class="bi bi-robot"></i></div>
+      <h2>Configuring the AI</h2>
+    </div>
+    <p class="section-subtitle">Tell the AI who it is, how it should talk, and how to qualify your leads.</p>
+
+    <p>Go to <strong>Settings → AI Config</strong> in the sidebar. This page has four sections explained below.</p>
+
+    <!-- OpenAI Key -->
+    <h3 style="margin:28px 0 12px;font-size:1.1rem"><i class="bi bi-key me-2" style="color:#d97706"></i>OpenAI API Key</h3>
+    <p>The AI is powered by <strong>OpenAI</strong> (the makers of ChatGPT). To use it, you need an API key from OpenAI.</p>
+
+    <ol class="steps" style="margin-top:16px">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Go to OpenAI's website</strong>
+          <p>Visit <code>platform.openai.com/api-keys</code> and log in (or create a free account).</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Create a new Secret Key</strong>
+          <p>Click <strong>+ Create new secret key</strong>. Give it a name like "WALE". Copy the key — it starts with <code>sk-proj-...</code>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Paste it into WALE</strong>
+          <p>In the OpenAI API Key field on the AI Config page, paste your key and click <strong>Save AI Configuration</strong>.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div>
+        <strong>OpenAI is a paid service.</strong> You will be charged by OpenAI based on how many messages the AI processes. The cost is very small per message (fractions of a cent), but ensure you have a valid payment method added to your OpenAI account.
+      </div>
+    </div>
+
+    <!-- Model & Parameters -->
+    <h3 style="margin:28px 0 12px;font-size:1.1rem"><i class="bi bi-cpu me-2" style="color:#3b82f6"></i>Model &amp; Parameters</h3>
+
+    <ul class="field-list">
+      <li>
+        <span class="field-name">OpenAI Model</span>
+        <span>
+          Choose which AI brain to use. <strong>GPT-4o Mini</strong> is recommended — it is fast, affordable, and smart enough for most sales conversations.
+          Use <strong>GPT-4o</strong> if you want the highest quality replies (more expensive).
+        </span>
+      </li>
+      <li>
+        <span class="field-name">Response Language</span>
+        <span>The language the AI will use when replying to customers. Choose the main language your customers speak.</span>
+      </li>
+      <li>
+        <span class="field-name">Temperature</span>
+        <span>
+          Controls how creative the AI is. <br>
+          <strong>0 = Very precise</strong> — always gives safe, predictable answers.<br>
+          <strong>1 = Balanced</strong> — recommended for most businesses.<br>
+          <strong>2 = Very creative</strong> — more varied answers, but may go off-topic.
+          <br>The default of <strong>0.7</strong> is a good starting point.
+        </span>
+      </li>
+      <li>
+        <span class="field-name">Max Tokens</span>
+        <span>Limits how long each AI reply can be. 500 tokens is roughly 375 words. Keep this low (300–500) for short, punchy WhatsApp messages. Higher values allow longer, more detailed replies.</span>
+      </li>
+    </ul>
+
+    <!-- System Prompt -->
+    <h3 style="margin:28px 0 12px;font-size:1.1rem"><i class="bi bi-chat-left-text me-2" style="color:#06b6d4"></i>System Prompt</h3>
+
+    <p>
+      The <strong>System Prompt</strong> is the instruction sheet you give to the AI before it talks to any customer.
+      It tells the AI: <em>Who are you? What do you sell? How should you speak?</em>
+    </p>
+
+    <div class="callout callout-tip" style="margin-top:16px">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>Example System Prompt:</strong><br><br>
+        <em>"You are a friendly sales assistant for Pixalab Technologies. Your goal is to understand the customer's business needs and recommend our software solutions. Always be polite, professional, and concise. Ask about their budget and timeline within the first 3 messages. Respond only in English."</em>
+      </div>
+    </div>
+
+    <p style="margin-top:16px">
+      You can use <strong>variables</strong> inside curly braces to automatically insert live data. Click any variable button on the page to insert it:
+    </p>
+
+    <table style="margin-top:12px">
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>What it inserts</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>{business_name}</code></td><td>Your company name</td><td>Pixalab Technologies</td></tr>
+        <tr><td><code>{lead_name}</code></td><td>The customer's name</td><td>Ramesh Sharma</td></tr>
+        <tr><td><code>{lead_phone}</code></td><td>The customer's phone number</td><td>+91 98279 16945</td></tr>
+        <tr><td><code>{lead_status}</code></td><td>Current lead status</td><td>new / warm / hot</td></tr>
+        <tr><td><code>{language}</code></td><td>Your chosen reply language</td><td>English</td></tr>
+        <tr><td><code>{date}</code></td><td>Today's date</td><td>24 April 2026</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Fallback -->
+    <h3 style="margin:28px 0 12px;font-size:1.1rem"><i class="bi bi-sliders me-2" style="color:#f59e0b"></i>Fallback &amp; Lead Qualification</h3>
+
+    <ul class="field-list">
+      <li>
+        <span class="field-name">Fallback Message</span>
+        <span>If OpenAI is temporarily unavailable (rare), WALE sends this message to the customer instead. Example: <em>"Thank you for reaching out! Our team will get back to you shortly."</em></span>
+      </li>
+      <li>
+        <span class="field-name">Qualification Rules</span>
+        <span>
+          Write one rule per line to tell the AI how to classify your leads. The AI reads these rules and decides whether a customer is Hot, Warm, Cold, Converted, or Lost. <br><br>
+          <strong>Example rules:</strong><br>
+          <em>— Mark as HOT if the customer mentions a specific budget<br>
+          — Mark as CONVERTED if the customer says they want to proceed<br>
+          — Mark as LOST if the customer says "not interested" more than once</em>
+        </span>
+      </li>
+    </ul>
+
+    <!-- Test Console -->
+    <h3 style="margin:28px 0 12px;font-size:1.1rem"><i class="bi bi-terminal me-2" style="color:#10b981"></i>Live Test Console</h3>
+    <p>
+      At the bottom of the AI Config page, there is a <strong>Test Console</strong>. Type a test message (e.g. <em>"Hi, I need help with my business"</em>) and click <strong>Test</strong>. The AI will reply instantly so you can see exactly what your customers will see — without sending any real WhatsApp message.
+    </p>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-check-circle-fill"></i>
+      <div>
+        Always test your System Prompt using the Test Console before going live. Keep refining it until the AI replies sound exactly how you want.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 6 — DASHBOARD
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="dashboard">
+    <div class="section-title">
+      <div class="icon" style="background:#eff6ff;color:#3b82f6"><i class="bi bi-speedometer2"></i></div>
+      <h2>Dashboard</h2>
+    </div>
+    <p class="section-subtitle">Your command centre — see everything at a glance.</p>
+
+    <p>The Dashboard is the first page you see after logging in. It gives you a quick summary of how your business is performing on WhatsApp.</p>
+
+    <table style="margin-top:20px">
+      <thead>
+        <tr><th>Card / Chart</th><th>What it tells you</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Total Leads</strong></td>
+          <td>How many unique customers have messaged your WhatsApp number so far.</td>
+        </tr>
+        <tr>
+          <td><strong>Active Conversations</strong></td>
+          <td>Conversations currently open (customer has not been closed/resolved).</td>
+        </tr>
+        <tr>
+          <td><strong>AI Replies Today</strong></td>
+          <td>How many automatic AI replies have been sent today.</td>
+        </tr>
+        <tr>
+          <td><strong>Hot Leads</strong></td>
+          <td>Leads the AI has identified as highly interested — follow up with these first!</td>
+        </tr>
+        <tr>
+          <td><strong>Recent Leads</strong></td>
+          <td>A quick list of the newest customers. Click any name to open the conversation.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>Pro tip:</strong> Check the Dashboard every morning. Focus your day on the <em>Hot Leads</em> — these are the customers most likely to buy today.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 7 — LEADS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="leads">
+    <div class="section-title">
+      <div class="icon" style="background:#f5f3ff;color:#7c3aed"><i class="bi bi-people-fill"></i></div>
+      <h2>Managing Leads</h2>
+    </div>
+    <p class="section-subtitle">View, search, and manage every customer who has ever messaged you.</p>
+
+    <p>Go to <strong>Leads → All Leads</strong> in the sidebar. Every person who messages your WhatsApp number is automatically saved here as a <em>lead</em>.</p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Understanding Lead Status</h3>
+    <p>Each lead has a status badge that tells you where they are in the sales process:</p>
+
+    <table style="margin-top:12px">
+      <thead>
+        <tr><th>Status</th><th>Meaning</th><th>What to do</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-blue">New</span></td>
+          <td>Just arrived, AI has greeted them.</td>
+          <td>Let the AI continue the conversation.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-yellow">Warm</span></td>
+          <td>Showing interest but not committed.</td>
+          <td>AI is nurturing them. Watch the conversation.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-red">Hot</span> </td>
+          <td>High intent, ready to buy.</td>
+          <td>Take over manually and close the deal!</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">Converted</span></td>
+          <td>Agreed to buy / booked.</td>
+          <td>Mark them converted and proceed with fulfilment.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-gray">Lost</span></td>
+          <td>Not interested or unresponsive.</td>
+          <td>No action needed for now.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Lead Score</h3>
+    <p>
+      Each lead also has a <strong>score from 0 to 100</strong> set by the AI. The higher the score, the more likely this person is to become a customer.
+      A score of <strong>80+</strong> is excellent — prioritise these leads immediately.
+    </p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">What you can do on this page</h3>
+    <ul style="padding-left:20px;color:var(--muted);font-size:.92rem">
+      <li style="margin-bottom:8px"><strong>Search</strong> — Type a name or phone number in the search box to find a specific lead.</li>
+      <li style="margin-bottom:8px"><strong>Filter</strong> — Filter leads by status (New, Hot, Warm, etc.) to see only the ones you need.</li>
+      <li style="margin-bottom:8px"><strong>View Conversation</strong> — Click on any lead's name to open their full WhatsApp conversation.</li>
+      <li style="margin-bottom:8px"><strong>Update Notes</strong> — Add your personal notes about a lead (e.g. "Interested in Plan A, call back on Monday").</li>
+      <li><strong>Change Status Manually</strong> — If you spoke to them on the phone and closed the deal, you can manually change their status to Converted.</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 8 — CONVERSATIONS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="conversations">
+    <div class="section-title">
+      <div class="icon" style="background:#dcfce7;color:#16a34a"><i class="bi bi-chat-dots-fill"></i></div>
+      <h2>Conversations</h2>
+    </div>
+    <p class="section-subtitle">Read every message, send manual replies, and control the AI — all from one screen.</p>
+
+    <p>Click <strong>Conversations</strong> in the sidebar to see a list of all active chats. Click any conversation to open it.</p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Inside a Conversation</h3>
+
+    <ul class="field-list">
+      <li>
+        <span class="field-name">Message Thread</span>
+        <span>The full WhatsApp conversation is shown in the centre — customer messages on the left, your AI / agent replies on the right. Messages are labelled <span class="badge badge-yellow">AI</span> or <span class="badge badge-blue">Agent</span> so you always know who replied.</span>
+      </li>
+      <li>
+        <span class="field-name">AI Auto-Reply button</span>
+        <span>
+          There is a button on the left panel that shows whether AI auto-reply is <strong>ON</strong> (yellow/orange) or <strong>OFF</strong>. When ON, the AI replies to every customer message automatically. When OFF, only your manual replies go out.
+        </span>
+      </li>
+      <li>
+        <span class="field-name">Send a Manual Message</span>
+        <span>Type your message in the box at the bottom and press <strong>Ctrl + Enter</strong> (or click the send button). This sends the message directly from your WhatsApp number.</span>
+      </li>
+      <li>
+        <span class="field-name">Close Chat</span>
+        <span>Once you have resolved a conversation, click <strong>Close Chat</strong>. The conversation is archived and removed from the active list.</span>
+      </li>
+      <li>
+        <span class="field-name">View Lead</span>
+        <span>Click <strong>View Lead</strong> to open the full lead profile — status, score, notes, and contact details.</span>
+      </li>
+      <li>
+        <span class="field-name">Start Funnel</span>
+        <span>Enrol this lead into a pre-built sales funnel (a sequence of automated messages). See the Funnels section for more details.</span>
+      </li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>When to turn off AI Auto-Reply:</strong> If you want to take over a conversation personally — for example, to negotiate a deal — turn off the AI toggle for that conversation. The AI will stop replying and you can type manually. Turn it back on when you're done.
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        <strong>Live indicator:</strong> The top-right corner shows a <span style="color:#22c55e;font-weight:700">● Live</span> badge when WALE is connected to WhatsApp and actively receiving messages. If you see a red badge, check your WhatsApp settings.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 9 — FUNNELS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="funnels">
+    <div class="section-title">
+      <div class="icon" style="background:#fff7ed;color:#ea580c"><i class="bi bi-funnel-fill"></i></div>
+      <h2>Funnels</h2>
+    </div>
+    <p class="section-subtitle">Automated message sequences that guide a lead through your sales process.</p>
+
+    <p>
+      A <strong>Funnel</strong> is an <strong>automated WhatsApp conversation</strong> — a sequence of steps that runs by itself. Unlike a fixed timed sequence, a funnel is <strong>reply-driven</strong>: it sends a message, can <em>wait for the lead's answer</em>, branch based on what they say, and update the lead — all without you typing anything.
+    </p>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>Example:</strong> a new lead messages → the funnel greets them → asks <em>"Are you looking to buy or rent? Reply 1 or 2"</em> → waits → if they reply <strong>1</strong> it asks their budget and tags them "Hot"; if <strong>2</strong> it sends rental options → then ends with <em>"Our team will call you shortly."</em>
+      </div>
+    </div>
+
+    <!-- 1. Trigger -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-play-circle me-2" style="color:#ea580c"></i>1 — How a funnel starts (Trigger)</h3>
+    <p>Every funnel has exactly one trigger:</p>
+    <ul class="field-list">
+      <li><span class="field-name">Manual</span><span>You start it yourself from a lead's conversation page using the <strong>Start Funnel</strong> button. Best for follow-ups you time by hand.</span></li>
+      <li><span class="field-name">Keyword in message</span><span>Starts automatically when a lead's message contains a word you choose (e.g. <em>price</em>).</span></li>
+      <li><span class="field-name">Auto-start for new leads</span><span>Starts the moment a new person messages your WhatsApp number for the first time — perfect for a welcome flow.</span></li>
+    </ul>
+
+    <!-- 2. Step types -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-layers me-2" style="color:#ea580c"></i>2 — The four step types</h3>
+    <p>A funnel is built from <strong>steps</strong>. Each step does one thing:</p>
+    <table>
+      <thead><tr><th style="width:28%">Step type</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Send Message</strong></td><td>Sends a WhatsApp message, then moves on <em>automatically</em> (no waiting). Use for greetings, info, closing lines.</td></tr>
+        <tr><td><strong>Ask Question</strong></td><td>Sends a message and then <strong>waits</strong> for the lead's reply before continuing. (See answer types below.)</td></tr>
+        <tr><td><strong>Perform Action</strong></td><td>Does something silently, then continues: <em>Update Lead Status</em>, <em>Add a Note</em>, or <em>Add a Tag</em>. No message is sent.</td></tr>
+        <tr><td><strong>End Funnel</strong></td><td>Marks the funnel finished for this lead. (A funnel also ends automatically after its last step.)</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:16px"><strong>For "Ask Question" steps</strong>, choose how the lead should answer:</p>
+    <ul class="field-list">
+      <li><span class="field-name">Free text</span><span>Any text (name, city, requirement…).</span></li>
+      <li><span class="field-name">Number</span><span>The lead must reply with a number (budget, quantity…).</span></li>
+      <li><span class="field-name">Multiple choice</span><span>You list options; the lead replies with the option number.</span></li>
+      <li><span class="field-name">Yes / No</span><span>The lead replies 1 for Yes or 2 for No.</span></li>
+      <li><span class="field-name">Save answer as</span><span>Optionally store the reply under a short name (e.g. <code>budget</code>) so you can reuse it later as <code>{budget}</code>.</span></li>
+    </ul>
+
+    <!-- 3. Default Next Step -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-signpost me-2" style="color:#ea580c"></i>3 — Default Next Step</h3>
+    <p>Every step has a <strong>Default Next Step</strong> — where the funnel goes once this step finishes:</p>
+    <ul class="field-list">
+      <li><span class="field-name">Auto / End funnel</span><span>Continue to the <strong>next step in the list</strong>. If this is the last step, the funnel <strong>ends</strong>. (This is the usual choice — just order your steps top-to-bottom.)</span></li>
+      <li><span class="field-name">A specific step</span><span>Jump straight to that step instead — to skip ahead, or loop back to an earlier step.</span></li>
+    </ul>
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>On <strong>Ask Question</strong> steps, the Default Next Step is the <strong>fallback</strong> — it's only used when none of the step's Conditions match the reply.</div>
+    </div>
+
+    <!-- 4. Conditions -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-signpost-split me-2" style="color:#ea580c"></i>4 — Branching with Conditions</h3>
+    <p>On an <strong>Ask Question</strong> step you can add <strong>Conditions</strong> to send leads down different paths based on their answer. Conditions are checked top-to-bottom and the <strong>first match wins</strong>. Each one has a type, a value to match, and the next step to jump to:</p>
+    <table>
+      <thead><tr><th style="width:42%">Condition</th><th>Matches when the reply…</th></tr></thead>
+      <tbody>
+        <tr><td>Reply contains…</td><td>contains your value (e.g. "yes")</td></tr>
+        <tr><td>Reply equals…</td><td>exactly equals your value</td></tr>
+        <tr><td>Reply starts with…</td><td>begins with your value</td></tr>
+        <tr><td>Reply is a number</td><td>is any number</td></tr>
+        <tr><td>Choice number (1, 2, 3…)</td><td>equals that option number</td></tr>
+        <tr><td>Any reply (catch-all)</td><td>anything — always matches</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>Always add an <strong>"Any reply (catch-all)"</strong> condition <em>last</em>, pointing to a "Sorry, I didn't understand — please reply 1 or 2" step, so unexpected answers are handled gracefully.</div>
+    </div>
+
+    <!-- 5. Variables -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-braces me-2" style="color:#ea580c"></i>5 — Personalise with variables</h3>
+    <p>Put variables in <code>{curly_braces}</code> in any message and WALE replaces them with live data when sending:</p>
+    <p style="margin:8px 0">
+      <code>{lead_name}</code> &nbsp; <code>{lead_phone}</code> &nbsp; <code>{date}</code> &nbsp; <code>{time}</code>
+      &nbsp;— plus any answer you saved, e.g. <code>{budget}</code>.
+    </p>
+
+    <!-- Quick-start shortcuts -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-stars me-2" style="color:#22c55e"></i>Two shortcuts to get started fast</h3>
+    <p>Building from scratch is optional. On the Funnels page you'll find:</p>
+    <ul class="field-list">
+      <li><span class="field-name"><i class="bi bi-stars me-1"></i>Generate with AI</span><span>Describe your funnel in plain words (a "Knowledge Base"), optionally upload a <strong>flowchart image</strong>, and AI drafts the whole funnel — messages, questions, branches and actions. It opens in the builder as a <strong>Paused</strong> draft for you to review and activate.</span></li>
+      <li><span class="field-name"><i class="bi bi-lightning-charge me-1"></i>Load Sample</span><span>One click drops in a ready-made <em>Lead Qualification</em> funnel you can edit — the fastest way to learn how the builder works.</span></li>
+    </ul>
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>Both shortcuts create the funnel <strong>Paused</strong> — nothing goes live to customers until you review it and switch it <strong>Active</strong>.</div>
+    </div>
+
+    <!-- How to build -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-plus-circle me-2" style="color:#22c55e"></i>How to build a funnel manually</h3>
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-body"><strong>Funnels → Create New Funnel</strong><p>Give it a clear name and (optional) description.</p></div></li>
+      <li><div class="step-num">2</div><div class="step-body"><strong>Pick the Trigger</strong><p>Manual, Keyword, or Auto-start for new leads.</p></div></li>
+      <li><div class="step-num">3</div><div class="step-body"><strong>Add Step</strong><p>Choose the step type and write the message / question. Use <code>{variables}</code> to personalise it.</p></div></li>
+      <li><div class="step-num">4</div><div class="step-body"><strong>Configure the step</strong><p>For a question: pick the answer type and (optionally) "Save answer as". For an action: choose status / note / tag.</p></div></li>
+      <li><div class="step-num">5</div><div class="step-body"><strong>Set the path</strong><p>Choose the <strong>Default Next Step</strong>, and on question steps add <strong>Conditions</strong> to branch.</p></div></li>
+      <li><div class="step-num">6</div><div class="step-body"><strong>Order &amp; finish</strong><p><strong>Drag steps</strong> to reorder. Toggle <strong>Active</strong> on and click <strong>Save Changes</strong>.</p></div></li>
+    </ol>
+
+    <!-- Sessions -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-bar-chart-steps me-2" style="color:#6366f1"></i>Tracking funnel runs (Sessions)</h3>
+    <p>Every time a funnel runs for a lead, WALE creates a <strong>Session</strong>. Open <strong>Funnels → Sessions</strong> to see who is currently in a funnel, each run's status (<strong>Active</strong>, <strong>Completed</strong>, or <strong>Abandoned</strong>), and the answers collected along the way.</p>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div>
+        <strong>WhatsApp 24-hour rule:</strong> Meta only allows you to send free-form messages within 24 hours of the customer's last message. After that, you can only send pre-approved <em>Template</em> messages. Design your funnels with this in mind.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 10 — AUTOMATIONS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="automations">
+    <div class="section-title">
+      <div class="icon" style="background:#fef3c7;color:#d97706"><i class="bi bi-lightning-charge-fill"></i></div>
+      <h2>Automations</h2>
+    </div>
+    <p class="section-subtitle">Set rules that trigger actions automatically — no manual work needed.</p>
+
+    <p>
+      Automations are <em>if this, then that</em> rules. You define a <strong>trigger</strong> (something that happens)
+      and an <strong>action</strong> (what WALE does in response).
+    </p>
+
+    <div class="screen-mock" style="margin-top:20px">
+      <div class="mock-bar">
+        <div class="dot" style="background:#ef4444"></div>
+        <div class="dot" style="background:#f59e0b"></div>
+        <div class="dot" style="background:#22c55e"></div>
+        <span style="margin-left:8px;font-size:.78rem;color:#94a3b8">Example Automations</span>
+      </div>
+      <div class="mock-body">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fafc;border-radius:8px;margin-bottom:10px;font-size:.88rem">
+          <i class="bi bi-lightning-charge-fill" style="color:#f59e0b"></i>
+          <span><strong>When</strong> a new lead arrives → <strong>Start</strong> the "Welcome Funnel"</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fafc;border-radius:8px;margin-bottom:10px;font-size:.88rem">
+          <i class="bi bi-lightning-charge-fill" style="color:#f59e0b"></i>
+          <span><strong>When</strong> lead score reaches 80+ → <strong>Send</strong> a notification to the sales team</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fafc;border-radius:8px;font-size:.88rem">
+          <i class="bi bi-lightning-charge-fill" style="color:#f59e0b"></i>
+          <span><strong>When</strong> status changes to "Converted" → <strong>Send</strong> a thank-you template message</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">How to create an Automation</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Go to Automations in the sidebar</strong>
+          <p>Click <strong>Automations</strong> and then <strong>New Automation</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Choose a Trigger</strong>
+          <p>Select what event starts the automation — for example, <em>New Lead</em>, <em>Status Change</em>, or <em>Keyword in message</em>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Choose an Action</strong>
+          <p>Select what happens — for example, <em>Send a message</em>, <em>Start a Funnel</em>, or <em>Change lead status</em>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Save and Activate</strong>
+          <p>Click <strong>Save</strong>. The automation will run automatically from now on.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 10b — MESSAGE TEMPLATES
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="templates">
+    <div class="section-title">
+      <div class="icon" style="background:#ecfdf5;color:#059669"><i class="bi bi-file-earmark-text-fill"></i></div>
+      <h2>Message Templates</h2>
+    </div>
+    <p class="section-subtitle">Start a chat with a customer <em>before</em> they message you — or re-engage one after 24 hours.</p>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div>
+        <strong>Why templates exist — the 24-hour rule:</strong> WhatsApp only lets you send <em>free-form</em> messages within <strong>24 hours</strong> of the customer's last reply. To message someone who has <strong>never contacted you</strong>, or who last replied <strong>over 24 hours ago</strong>, you must send a <strong>pre-approved template</strong>. A normal message will simply fail. This is a Meta rule, not a WALE limitation.
+      </div>
+    </div>
+
+    <!-- What is a template -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-info-circle me-2" style="color:#059669"></i>What is a template?</h3>
+    <p>
+      A <strong>template</strong> is a message you create and get <strong>approved by Meta</strong> in advance (in the Meta WhatsApp Manager). It can contain <strong>variables</strong> like <code>{{1}}</code>, <code>{{2}}</code> that you fill in when sending — for example a name or an order number. Once approved, you can send it to customers anytime, even outside the 24-hour window.
+    </p>
+
+    <!-- Step 1: sync -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-arrow-repeat me-2" style="color:#059669"></i>1 — Sync your templates from Meta</h3>
+    <p>WALE reads your approved templates directly from Meta — you never re-type them.</p>
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-body"><strong>Create the template in Meta</strong><p>In <strong>Meta WhatsApp Manager → Message Templates</strong>, create your template and submit it for approval. Approval usually takes a few minutes to a few hours.</p></div></li>
+      <li><div class="step-num">2</div><div class="step-body"><strong>Open Templates in WALE</strong><p>Click <strong>Templates</strong> in the sidebar.</p></div></li>
+      <li><div class="step-num">3</div><div class="step-body"><strong>Click "Sync from Meta"</strong><p>WALE pulls every <strong>approved</strong> template into the app, with its variables detected automatically.</p></div></li>
+    </ol>
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        Syncing needs your WhatsApp <strong>Access Token</strong> and <strong>WABA ID</strong> saved under <strong>Settings → WhatsApp</strong>, and the token must have the <code>whatsapp_business_management</code> permission. If sync fails, WALE tells you exactly what's missing.
+      </div>
+    </div>
+
+    <!-- Step 2: send to one -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-send me-2" style="color:#059669"></i>2 — Send a template to one customer</h3>
+    <p>There are two ways to reach a single customer:</p>
+    <ul class="field-list">
+      <li><span class="field-name">From the Leads list</span><span>Click the <strong>Send Template</strong> (document) icon next to any lead — perfect for contacting someone who has never messaged you.</span></li>
+      <li><span class="field-name">From a conversation</span><span>Open the chat and click <strong>Send Template</strong> in the left panel. When a chat is locked (window closed) you'll also see a <em>"send a template to re-open the chat"</em> link.</span></li>
+    </ul>
+    <p style="margin-top:12px">On the compose screen, pick a template, fill in any variables, watch the <strong>live preview</strong>, and click <strong>Send Template</strong>. The sent message appears in the conversation thread.</p>
+
+    <!-- Step 3: broadcast -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-megaphone me-2" style="color:#059669"></i>3 — Broadcast to many customers</h3>
+    <p>Click <strong>Broadcast</strong> on the Templates page to send one template to many leads at once.</p>
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-body"><strong>Pick a template</strong><p>Choose any approved template — with or without variables.</p></div></li>
+      <li><div class="step-num">2</div><div class="step-body"><strong>Personalise each variable</strong><p>For every variable, choose where its value comes from — the <strong>Lead name</strong>, <strong>Phone</strong>, <strong>Email</strong>, <strong>Status</strong>, <strong>Source</strong>, or a <strong>fixed custom text</strong>. WALE fills it in per recipient, so <code>Hi {{1}}</code> becomes each person's real name.</p></div></li>
+      <li><div class="step-num">3</div><div class="step-body"><strong>Choose recipients</strong><p>Tick individual leads or use <strong>Select all</strong> (up to 200 per send).</p></div></li>
+      <li><div class="step-num">4</div><div class="step-body"><strong>Send Broadcast</strong><p>WALE sends each personalised message and reports how many succeeded. Any failures appear in <strong>Notifications</strong>.</p></div></li>
+    </ol>
+    <div class="callout callout-warn">
+      <i class="bi bi-shield-exclamation"></i>
+      <div>
+        <strong>Only message people who opted in.</strong> Sending unsolicited broadcasts can get your WhatsApp number flagged or banned by Meta. Templates in the <em>Marketing</em> category also carry a per-message cost set by Meta.
+      </div>
+    </div>
+
+    <!-- What happens next -->
+    <h3 style="margin:28px 0 14px;font-size:1.15rem"><i class="bi bi-arrow-return-right me-2" style="color:#059669"></i>What happens after you send</h3>
+    <p>
+      A template is the <strong>door-opener</strong>. The moment the customer replies, the 24-hour window opens and <strong>everything else takes over automatically</strong> — your AI auto-reply, and any <em>new-lead</em> or <em>keyword</em> funnels and automations run as normal, using free-form messages. You don't need to configure anything extra.
+    </p>
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>Tip:</strong> A great pattern is a short greeting template ("Hi {{1}}, thanks for your interest! How can we help?") that invites a reply — then your AI and funnels handle the rest of the conversation.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 11 — ANALYTICS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="analytics">
+    <div class="section-title">
+      <div class="icon" style="background:#eff6ff;color:#2563eb"><i class="bi bi-bar-chart-line-fill"></i></div>
+      <h2>Analytics</h2>
+    </div>
+    <p class="section-subtitle">Understand how your WhatsApp sales channel is performing over time.</p>
+
+    <p>Go to <strong>Analytics</strong> in the sidebar. Here you can see charts and numbers that show:</p>
+
+    <table style="margin-top:16px">
+      <thead>
+        <tr><th>Metric</th><th>What it means</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>New Leads Over Time</strong></td>
+          <td>A chart showing how many new customers messaged you each day/week. Use this to spot busy periods.</td>
+        </tr>
+        <tr>
+          <td><strong>Conversion Rate</strong></td>
+          <td>The percentage of leads that became paying customers. The higher, the better.</td>
+        </tr>
+        <tr>
+          <td><strong>Lead Status Breakdown</strong></td>
+          <td>A pie chart showing how many leads are New, Hot, Warm, Converted, and Lost.</td>
+        </tr>
+        <tr>
+          <td><strong>AI Reply Volume</strong></td>
+          <td>How many AI messages were sent. Also shows OpenAI token usage (for cost tracking).</td>
+        </tr>
+        <tr>
+          <td><strong>Response Time</strong></td>
+          <td>Average time between a customer's message and the AI's reply (usually under 5 seconds).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        Review Analytics once a week. If the conversion rate is low, consider improving your System Prompt to make the AI more persuasive. If leads are dropping off early, your Funnel may need a stronger hook in the first message.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 11b — NOTIFICATIONS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="notifications">
+    <div class="section-title">
+      <div class="icon" style="background:#fef2f2;color:#dc2626"><i class="bi bi-bell-fill"></i></div>
+      <h2>Notifications</h2>
+    </div>
+    <p class="section-subtitle">Know instantly when a message doesn't reach a customer.</p>
+
+    <p>
+      WALE keeps you informed when something needs your attention — most importantly, when a WhatsApp message <strong>fails to deliver</strong> (for example, when you try to message a customer outside the 24-hour window). You'll see these alerts in two places:
+    </p>
+
+    <ul class="field-list">
+      <li>
+        <span class="field-name">The bell icon (top bar)</span>
+        <span>A <i class="bi bi-bell"></i> bell sits in the top-right of every page. A red badge shows how many unread alerts you have; click it for the latest few.</span>
+      </li>
+      <li>
+        <span class="field-name">The Notifications page</span>
+        <span>Click <strong>Notifications</strong> in the sidebar (or <em>"View all notifications"</em> in the bell) for the full history. Filter by <strong>Errors</strong>, <strong>Warnings</strong>, <strong>Info</strong>, or <strong>Success</strong>, jump to the related lead, or <strong>Clear all</strong>.</span>
+      </li>
+    </ul>
+
+    <p style="margin-top:12px">
+      Failed messages are <strong>also</strong> shown right in the conversation — the message bubble turns red with a <strong>✗ Failed</strong> marker and the exact reason underneath (e.g. <em>"more than 24 hours have passed since the customer last replied"</em>).
+    </p>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>
+        <strong>Most common alert:</strong> "WhatsApp message not delivered — more than 24 hours have passed…". The fix is to re-engage that customer with a <a href="#templates">Message Template</a>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 12 — PROFILE
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="profile">
+    <div class="section-title">
+      <div class="icon" style="background:#f5f3ff;color:#7c3aed"><i class="bi bi-person-circle"></i></div>
+      <h2>Profile &amp; Account Settings</h2>
+    </div>
+    <p class="section-subtitle">Update your personal details, company name, timezone, and password.</p>
+
+    <p>Go to <strong>Settings → Profile</strong> in the sidebar.</p>
+
+    <ul class="field-list">
+      <li>
+        <span class="field-name">Full Name</span>
+        <span>Your name as it appears in the admin panel.</span>
+      </li>
+      <li>
+        <span class="field-name">Company Name</span>
+        <span>Your business name. This is used in AI prompts via the <code>{business_name}</code> variable, so make sure it's correct.</span>
+      </li>
+      <li>
+        <span class="field-name">Phone Number</span>
+        <span>Your personal contact number (not the WhatsApp business number — that is configured in WhatsApp settings).</span>
+      </li>
+      <li>
+        <span class="field-name">Timezone</span>
+        <span>Set your local timezone so that dates and times shown in the dashboard are correct for your location.</span>
+      </li>
+      <li>
+        <span class="field-name">Change Password</span>
+        <span>Enter your current password, then your new password (at least 8 characters), and confirm it. Click <strong>Save</strong>.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — MY PLAN & USAGE  (tenant-facing)
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="plan">
+    <div class="section-title">
+      <div class="icon" style="background:#eef2ff;color:#4f46e5"><i class="bi bi-gem"></i></div>
+      <h2>My Plan &amp; Usage</h2>
+    </div>
+    <p class="section-subtitle">See your plan's limits, track your usage, and know what to do when you hit a cap.</p>
+
+    <p>If you signed up through a paid plan, your account has monthly allowances. Open <strong>My Plan</strong> in the sidebar to see your current plan, this cycle's usage, and which features are included.</p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">What's limited</h3>
+    <ul class="field-list">
+      <li>
+        <span class="field-name">Leads / cycle</span>
+        <span>The number of new leads you can capture each billing cycle. Unlimited on top plans.</span>
+      </li>
+      <li>
+        <span class="field-name">AI replies / cycle</span>
+        <span>How many automatic AI replies WALE sends each cycle. Unlimited on top plans.</span>
+      </li>
+      <li>
+        <span class="field-name">Features</span>
+        <span>Some abilities (CSV export, advanced analytics, REST API, custom AI prompt) are only on certain plans. Locked items show an "upgrade" note.</span>
+      </li>
+    </ul>
+
+    <div class="callout callout-info">
+      <i class="bi bi-arrow-repeat"></i>
+      <div>
+        <strong>Usage resets every cycle.</strong> Your counters reset on each monthly anniversary of your subscription, not on a fixed calendar date. The Dashboard shows live usage bars that turn amber as you approach a limit.
+      </div>
+    </div>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">What happens when you reach a limit</h3>
+    <table>
+      <thead><tr><th>Limit reached</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><strong>AI replies</strong></td><td>Automatic AI replies <em>pause</em> for the rest of the cycle. Incoming messages are still received; you can reply manually.</td></tr>
+        <tr><td><strong>Lead limit</strong></td><td>Adding leads manually or via the API is blocked. <strong>Inbound WhatsApp messages still create the lead</strong> — you never lose a real customer — but they count toward your cap.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-arrow-up-circle-fill"></i>
+      <div>
+        <strong>Need more?</strong> To upgrade, contact your administrator — they can move you to a higher plan instantly. If your subscription expires, you'll see a "subscription inactive" screen until it's renewed.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — ADMIN OVERVIEW  (platform owner)
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="admin-overview">
+    <div class="section-title">
+      <div class="icon" style="background:#0f1923;color:#25D366"><i class="bi bi-shield-lock-fill"></i></div>
+      <h2>Platform Admin — Overview</h2>
+    </div>
+    <p class="section-subtitle">For the person who owns and runs this WALE installation (the Super Admin).</p>
+
+    <div class="callout callout-info">
+      <i class="bi bi-people-fill"></i>
+      <div>
+        <strong>Two kinds of users.</strong> Everything above is for <strong>business users</strong> (your customers / tenants) who connect WhatsApp and work their leads. The sections below are for the <strong>Super Admin</strong> — you, the platform owner — and these menus appear <em>only</em> when you're logged in as the Super Admin.
+      </div>
+    </div>
+
+    <p>As the Super Admin you manage the whole business:</p>
+    <ul style="padding-left:20px;color:var(--muted);font-size:.92rem;line-height:1.9">
+      <li><strong>Tenants</strong> — create and manage the business accounts that use WALE.</li>
+      <li><strong>Plans</strong> — define your pricing tiers, limits, and features.</li>
+      <li><strong>Sales &amp; Payments</strong> — your public pricing page and PayPal checkout.</li>
+      <li><strong>Orders</strong> — every payment and its status.</li>
+      <li><strong>Email / SMTP</strong> — the mail server used for system emails.</li>
+      <li><strong>Branding</strong> — make the whole app your own.</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — MANAGING TENANTS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="tenants">
+    <div class="section-title">
+      <div class="icon" style="background:#f5f3ff;color:#7c3aed"><i class="bi bi-people-fill"></i></div>
+      <h2>Managing Tenants</h2>
+    </div>
+    <p class="section-subtitle">Create and manage the business accounts on your platform. (Super Admin → All Tenants)</p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Adding a tenant manually</h3>
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-body"><strong>All Tenants → Add Tenant</strong><p>Enter their name, email, company, timezone, status, and a starting password.</p></div></li>
+      <li><div class="step-num">2</div><div class="step-body"><strong>They get a welcome email</strong><p>WALE emails the new tenant their login URL and credentials automatically (requires Email/SMTP to be configured).</p></div></li>
+    </ol>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Managing existing tenants</h3>
+    <ul class="field-list">
+      <li><span class="field-name">Edit</span><span>Update name, email, company, timezone, status, or reset their password (they're emailed the new one).</span></li>
+      <li><span class="field-name">Suspend / Reactivate</span><span>Suspended accounts can't log in. The tenant is emailed when their status changes.</span></li>
+      <li><span class="field-name">Subscription</span><span>On a tenant's page you can <strong>assign a plan</strong>, <strong>extend</strong> it (+1 month up to +1 year), or <strong>cancel</strong> it — this controls their plan limits and access.</span></li>
+      <li><span class="field-name">Delete</span><span>Removes the account. (Re-purchasing later with the same email safely restores it.)</span></li>
+    </ul>
+
+    <div class="callout callout-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        <strong>Tenants without a subscription are unrestricted.</strong> Manually-created accounts with no plan attached aren't limited. Plan limits apply once you assign them a plan (or they buy one).
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — PLANS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="plans-admin">
+    <div class="section-title">
+      <div class="icon" style="background:#eff6ff;color:#2563eb"><i class="bi bi-card-list"></i></div>
+      <h2>Plans</h2>
+    </div>
+    <p class="section-subtitle">Define the subscription tiers shown on your pricing page. (Super Admin → Plans)</p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Plan fields</h3>
+    <ul class="field-list">
+      <li><span class="field-name">Name &amp; Price</span><span>Display name and monthly price. A price of <strong>0</strong> makes it a free plan (instant signup, no payment).</span></li>
+      <li><span class="field-name">Lead Limit</span><span>New leads allowed per cycle. Enter <code>-1</code> for unlimited.</span></li>
+      <li><span class="field-name">AI Replies</span><span>AI auto-replies allowed per cycle. Enter <code>-1</code> for unlimited.</span></li>
+      <li><span class="field-name">Features</span><span>One per line. Recognised keys gate real abilities: <code>csv_export</code>, <code>advanced_dashboard</code>, <code>api_access</code>, <code>custom_prompt</code>, <code>ai_qualification</code>.</span></li>
+      <li><span class="field-name">Active</span><span>Only active plans appear on the public pricing page.</span></li>
+    </ul>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div>A plan that customers are already subscribed to can't be deleted — <strong>deactivate</strong> it instead so it disappears from pricing without breaking existing subscriptions.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — SALES PAGE & PAYMENTS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sales-admin">
+    <div class="section-title">
+      <div class="icon" style="background:#fff7ed;color:#ea580c"><i class="bi bi-cart-check-fill"></i></div>
+      <h2>Sales Page &amp; Payments</h2>
+    </div>
+    <p class="section-subtitle">Your public pricing page and the payment gateway that powers signups. (Super Admin → Sales &amp; Payments)</p>
+
+    <p>WALE includes a ready-made, branded pricing page at <code>/pricing</code> — share this link to sell WALE to your customers. It lists your active plans and handles checkout end-to-end.</p>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">Configure it</h3>
+    <ul class="field-list">
+      <li><span class="field-name">Sales content</span><span>Edit the hero headline, subheadline, call-to-action text, and feature highlights.</span></li>
+      <li><span class="field-name">Payment gateway</span><span>Currently <strong>PayPal</strong>. Enter your Client ID and Secret, choose <strong>Sandbox</strong> (testing) or <strong>Live</strong>, and set your currency.</span></li>
+    </ul>
+
+    <h3 style="margin:24px 0 12px;font-size:1.1rem">What happens at checkout</h3>
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-body"><strong>Customer picks a plan</strong><p>They enter their name and email on the checkout page.</p></div></li>
+      <li><div class="step-num">2</div><div class="step-body"><strong>They pay via PayPal</strong><p>Free plans skip payment entirely.</p></div></li>
+      <li><div class="step-num">3</div><div class="step-body"><strong>Account created automatically</strong><p>On success, WALE creates their tenant account, starts the subscription, and emails their login details.</p></div></li>
+    </ol>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-lightbulb-fill"></i>
+      <div>Get PayPal credentials at <strong>developer.paypal.com → Apps &amp; Credentials</strong>. Test with Sandbox keys + a sandbox buyer account first, then switch to Live. The payment layer is built to support more gateways in future.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — ORDERS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="orders-admin">
+    <div class="section-title">
+      <div class="icon" style="background:#ecfdf5;color:#059669"><i class="bi bi-receipt"></i></div>
+      <h2>Orders</h2>
+    </div>
+    <p class="section-subtitle">Every checkout and its payment status. (Super Admin → Orders)</p>
+
+    <p>The Orders screen shows paid revenue and counts, plus a searchable, filterable list of every order with its status:</p>
+    <p style="margin:10px 0">
+      <span class="badge badge-green">Paid</span>
+      <span class="badge badge-yellow">Pending</span>
+      <span class="badge badge-red">Failed</span>
+      <span class="badge badge-gray">Cancelled</span>
+    </p>
+
+    <ul class="field-list">
+      <li><span class="field-name">Order detail</span><span>Plan, amount, gateway, PayPal order id, and a link to the tenant account it created.</span></li>
+      <li><span class="field-name">Mark as paid</span><span>Manually set an order's status. Marking an unpaid order <strong>Paid</strong> creates (or links) the tenant account and emails their login — ideal for offline / bank-transfer payments.</span></li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — EMAIL / SMTP
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="email-admin">
+    <div class="section-title">
+      <div class="icon" style="background:#eff6ff;color:#3b82f6"><i class="bi bi-envelope-at-fill"></i></div>
+      <h2>Email / SMTP</h2>
+    </div>
+    <p class="section-subtitle">The mail server WALE uses for all system emails. (Super Admin → Email / SMTP)</p>
+
+    <p>Configure your SMTP details right in the admin panel — no file editing. These settings power the <strong>welcome emails</strong>, <strong>password resets</strong>, and <strong>account-status notices</strong>.</p>
+
+    <ul class="field-list">
+      <li><span class="field-name">Server fields</span><span>Host, Port, Encryption (TLS/SSL), Username, Password, From Email, From Name.</span></li>
+      <li><span class="field-name">Send Test Email</span><span>Verify your settings instantly — it reports the exact error if something's wrong (wrong password, port/encryption mismatch, etc.).</span></li>
+    </ul>
+
+    <div class="callout callout-warn">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <div><strong>Set this up early.</strong> Until SMTP is configured and the test email works, password resets and welcome emails won't send. Tip: SSL → port 465, TLS → port 587.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION — BRANDING / WHITE-LABEL
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="branding-admin">
+    <div class="section-title">
+      <div class="icon" style="background:#faf5ff;color:#9333ea"><i class="bi bi-palette-fill"></i></div>
+      <h2>Branding &amp; White-Label</h2>
+    </div>
+    <p class="section-subtitle">Make WALE look like your own product. (Super Admin → Branding)</p>
+
+    <ul class="field-list">
+      <li><span class="field-name">Brand Name</span><span>Shown in the sidebar, page titles, and system emails.</span></li>
+      <li><span class="field-name">Logo &amp; Favicon</span><span>Upload your logo (replaces the name in the sidebar) and browser favicon.</span></li>
+      <li><span class="field-name">Primary Color</span><span>Themes the active menu, buttons, and accents across the app.</span></li>
+      <li><span class="field-name">Login &amp; Footer</span><span>Custom login heading, subtitle, and footer text.</span></li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <i class="bi bi-check-circle-fill"></i>
+      <div>Branding applies everywhere — the admin panel, the login &amp; pricing pages, and outgoing emails — so your customers see <em>your</em> brand, not "WALE".</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SECTION 13 — FAQ
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="faq">
+    <div class="section-title">
+      <div class="icon" style="background:#f0fdf4;color:#15803d"><i class="bi bi-question-circle-fill"></i></div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <p class="section-subtitle">Answers to the most common questions.</p>
+
+    <details class="faq-item">
+      <summary>Why is the AI not replying to messages?</summary>
+      <div class="faq-body">
+        Check the following in order:
+        <ol style="margin-top:8px;padding-left:20px">
+          <li>Go to <strong>Settings → AI Config</strong> and make sure your OpenAI API Key is saved.</li>
+          <li>Go to <strong>Settings → WhatsApp</strong> and confirm it shows "WhatsApp Connected".</li>
+          <li>Open the conversation and check that <strong>AI Auto-Reply is ON</strong> (the button should be orange/yellow).</li>
+          <li>Check that your OpenAI account has a valid payment method at <code>platform.openai.com/billing</code>.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>The AI is sending two copies of the same message — why?</summary>
+      <div class="faq-body">
+        This means the code update that fixes message deduplication hasn't been deployed to your server yet. Contact your developer and ask them to deploy the latest version of <em>AIService.php</em> and <em>WhatsAppService.php</em>.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I see the AI reply before it goes to the customer?</summary>
+      <div class="faq-body">
+        Yes! Use the <strong>Live Test Console</strong> at the bottom of <em>Settings → AI Config</em>. Type any message and the AI will reply instantly — this is a dry run and no real WhatsApp message is sent.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I take over a conversation from the AI?</summary>
+      <div class="faq-body">
+        Open the conversation in WALE. On the left panel, click the <strong>AI Auto-Reply: ON</strong> button to turn it OFF. The AI will stop replying. You can now type messages manually in the text box at the bottom. When you're done, click the button again to re-enable the AI.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>My leads are not being saved. What's wrong?</summary>
+      <div class="faq-body">
+        This usually means the WhatsApp webhook is not configured correctly. Check:
+        <ol style="margin-top:8px;padding-left:20px">
+          <li>The Webhook URL in <em>Settings → WhatsApp</em> is correctly pasted in Meta's webhook section.</li>
+          <li>The <em>Verify Token</em> in WALE matches exactly what you entered in Meta.</li>
+          <li>You have subscribed to the <strong>messages</strong> field in Meta's webhook subscriptions.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use WALE for multiple WhatsApp numbers?</summary>
+      <div class="faq-body">
+        Each account (tenant) in WALE supports one WhatsApp number. If you need multiple numbers, your administrator can create additional accounts — one per number.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How much does the AI cost to run?</summary>
+      <div class="faq-body">
+        The AI cost depends on the OpenAI model you choose and how many messages are processed. As a rough guide, <strong>GPT-4o Mini</strong> costs approximately $0.00015 per message on average. For 1,000 conversations per month, this is usually less than $1–2 USD. Check OpenAI's pricing page for current rates.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my data secure?</summary>
+      <div class="faq-body">
+        Yes. WALE takes security seriously:
+        <ul style="margin-top:8px;padding-left:20px">
+          <li>Your WhatsApp Access Token and OpenAI API Key are encrypted using <strong>AES-256-CBC</strong> encryption before being stored in the database.</li>
+          <li>All communication between WALE and Meta / OpenAI uses <strong>HTTPS</strong> (encrypted connections).</li>
+          <li>Passwords are hashed using <strong>bcrypt</strong> and are never stored in plain text.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>The AI is replying in the wrong language. How do I fix it?</summary>
+      <div class="faq-body">
+        Go to <strong>Settings → AI Config</strong> and change the <strong>Response Language</strong> dropdown to the correct language. Also add a line to your System Prompt like: <em>"Always reply in Hindi, regardless of what language the customer uses."</em> Then click Save.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>A feature (CSV export, analytics, API…) is locked or hidden. Why?</summary>
+      <div class="faq-body">
+        It isn't included in your current plan. Open <strong>My Plan</strong> to see what's included, and contact your administrator to upgrade. (Admins: set which features each plan includes under <em>Super Admin → Plans</em>.)
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>The AI stopped replying / I can't add more leads.</summary>
+      <div class="faq-body">
+        You've likely hit your plan's monthly limit for the current cycle. Check the usage bars on your Dashboard or the <strong>My Plan</strong> page. Inbound WhatsApp messages are still captured, but AI auto-replies pause and manual lead-adding is blocked until you upgrade or the cycle resets.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>(Admin) How do customers sign up and pay?</summary>
+      <div class="faq-body">
+        Share your public pricing page at <code>/pricing</code>. Customers pick a plan, pay via PayPal (configure it under <em>Super Admin → Sales &amp; Payments</em>), and WALE automatically creates their account and emails their login. Free plans skip payment. For offline payments, you can manually mark an order <strong>Paid</strong> in <em>Super Admin → Orders</em>.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>(Admin) How do I change or renew a tenant's plan?</summary>
+      <div class="faq-body">
+        Open the tenant under <em>Super Admin → All Tenants</em>. From their page you can assign a plan, extend it (up to a year), or cancel it. This controls their limits and access immediately.
+      </div>
+    </details>
+
+    <div class="callout callout-info" style="margin-top:28px">
+      <i class="bi bi-envelope-fill"></i>
+      <div>
+        <strong>Need more help?</strong> Contact your system administrator or the WALE support team. When reporting an issue, always mention what you were doing when the problem occurred and take a screenshot if possible.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="background:var(--dark);color:rgba(255,255,255,.4);text-align:center;padding:28px;font-size:.8rem">
+    WALE — WhatsApp AI Lead Engine &nbsp;·&nbsp; User Guide v1.1 &nbsp;·&nbsp; July 2026
+  </div>
+
+</div><!-- /#main -->
+
+<script>
+  // Highlight active sidebar link on scroll
+  const sections = document.querySelectorAll('.section, #hero, #how-it-works');
+  const links    = document.querySelectorAll('#sidebar nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`#sidebar a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('[id]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

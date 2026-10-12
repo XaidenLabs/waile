@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * Page titles passed from controllers to views. Access with lang('Titles.key').
+ * Values with {0} are filled via lang('Titles.key', [$arg]).
+ */
+
+return [
+    'subscription'      => 'Subscription',
+    'planUsage'         => 'Plan & Usage',
+    'analytics'         => 'Analytics',
+    'automationRules'   => 'Automation Rules',
+    'newRule'           => 'New Automation Rule',
+    'editRule'          => 'Edit Automation Rule',
+    'automationLogs'    => 'Automation Logs',
+    'branding'          => 'Branding & White-Label',
+    'conversations'     => 'Conversations',
+    'chat'              => 'Chat: {0}',
+    'dashboard'         => 'Dashboard',
+    'emailSettings'     => 'Email / SMTP Settings',
+    'funnels'           => 'Conversation Funnels',
+    'newFunnel'         => 'New Funnel',
+    'editFunnel'        => 'Edit Funnel: {0}',
+    'funnelSessions'    => 'Funnel Sessions',
+    'generateFunnelAi'  => 'Generate Funnel with AI',
+    'leads'             => 'Leads',
+    'addLead'           => 'Add New Lead',
+    'lead'              => 'Lead: {0}',
+    'editLead'          => 'Edit Lead',
+    'notifications'     => 'Notifications',
+    'orders'            => 'Orders & Payments',
+    'order'             => 'Order #{0}',
+    'plans'             => 'Plans',
+    'addPlan'           => 'Add Plan',
+    'editPlan'          => 'Edit Plan',
+    'salesPayments'     => 'Sales Page & Payments',
+    'profile'           => 'Profile & Business Info',
+    'whatsappConfig'    => 'WhatsApp API Configuration',
+    'aiConfig'          => 'AI Configuration',
+    'templates'         => 'WhatsApp Templates',
+    'sendTemplate'      => 'Send Template',
+    'broadcastTemplate' => 'Broadcast Template',
+    'tenantManagement'  => 'Tenant Management',
+    'addTenant'         => 'Add New Tenant',
+    'tenant'            => 'Tenant: {0}',
+    'editTenant'        => 'Edit: {0}',
+    'pricing'           => '{0} — Pricing',
+    'checkout'          => 'Checkout — {0}',
+    'checkoutPlain'     => 'Checkout',
+];

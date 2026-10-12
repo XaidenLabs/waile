@@ -1,0 +1,101 @@
+/* ui.css — utility & component classes replacing former inline style="" attributes.
+   Generated from app views; edit classes here rather than adding inline styles. */
+
+.u-fs-40{font-size:.4rem}
+.u-fs-40-mid{font-size:.4rem;vertical-align:middle}
+.u-fs-60{font-size:.6rem}
+.u-fs-65{font-size:.65rem}
+.u-meta-65{font-size:.65rem;color:#888;margin-top:2px}
+.u-fs-68{font-size:.68rem}
+.u-fs-68-mw26{font-size:.68rem;min-width:26px}
+.u-fs-68-mt2{font-size:.68rem;margin-top:2px}
+.u-fs-70{font-size:.7rem}
+.u-fs-72{font-size:.72rem}
+.u-fs-72-nowrap{font-size:.72rem;white-space:nowrap}
+.u-fs-72-mono{font-size:.72rem;font-family:monospace}
+.u-fs-74{font-size:.74rem}
+.u-fs-75{font-size:.75rem}
+.u-fs-78{font-size:.78rem}
+.u-fs-82{font-size:.82rem}
+.u-fs-85{font-size:.85rem}
+.u-fs-88{font-size:.88rem}
+.u-fs-102{font-size:1.02rem}
+.u-fs-105{font-size:1.05rem}
+.u-fs-13{font-size:1.3rem}
+.u-fs-18{font-size:1.8rem}
+.u-fs-25{font-size:2.5rem}
+.u-fs-3{font-size:3rem}
+.u-h-4{height:4px}
+.u-h-5{height:5px}
+.u-h-6{height:6px}
+.u-h-8{height:8px}
+.u-h-10{height:10px}
+.u-h-10-r{height:10px;border-radius:4px}
+.u-w-88{width:88px}
+.u-w-38{width:38px}
+.u-w-40p{width:40%}
+.u-w-100p{width: 100%}
+.u-w-10em{width: 10em}
+.u-w-12em{width: 12em}
+.u-w-15em{width: 15em}
+.u-strength-bar{width:0;background:#dc3545}
+.u-mw-90{max-width:90px}
+.u-mw-120{max-width:120px}
+.u-mw-130{max-width:130px}
+.u-mw-150{max-width:150px}
+.u-mw-160{max-width:160px}
+.u-mw-200{max-width:200px}
+.u-mw-220{max-width:220px}
+.u-mw-260{max-width:260px}
+.u-mw-280{max-width:280px}
+.u-mw-72p{max-width:72%}
+.u-card-560{max-width:560px}
+.u-card-760{max-width:760px}
+.u-hero-title{max-width:780px;margin:0 auto}
+.u-minw-24{min-width:24px;text-align:right}
+.u-minw-26{min-width:26px;text-align:right}
+.u-minw-36{min-width:36px}
+.u-minw-85{min-width:85px;font-size:.82rem}
+.u-minw-110{min-width:110px}
+.u-minw-260{min-width:260px}
+.u-minw-320{min-width:320px;max-width:360px}
+.u-minh-0{min-height:0}
+.u-minh-20{min-height:20px}
+.u-sq-28{width:28px;height:28px}
+.u-sq-38{width:38px;height:38px}
+.u-sq-42{width:42px;height:42px;padding:0}
+.u-sq-64{width:64px;height:64px}
+.u-avatar-32{width:32px;height:32px;border-radius:50%;background:#0d6efd;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.u-avatar-36-wa{width:36px;height:36px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.u-avatar-40{width:40px;height:40px;border-radius:50%;background:#0d6efd;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.u-avatar-72{width:72px;height:72px;border-radius:50%;background:#0d6efd;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700}
+.u-ico-blue{background:#e8f0ff;color:#3b82f6}
+.u-ico-amber{background:#fff3e0;color:#f59e0b}
+.u-ico-green{background:#e9f9ef;color:#16a34a}
+.u-ico-purple{background:rgba(111,66,193,.12);color:#6f42c1}
+.u-c-53bdeb{color:#53bdeb}
+.u-c-3b82f6{color:#3b82f6}
+.u-c-111827{color:#111827}
+.u-c-ink{color:var(--ink);font-size:.88rem}
+.u-cursor-grab{cursor:grab}
+.u-pre-wrap{white-space:pre-wrap}
+.u-normal{white-space:normal}
+.u-bg-transparent{background:transparent}
+.u-sticky-75{top:75px}
+.u-vh-chat{height:calc(100vh - 120px)}
+.u-chat-fill{height:100%;min-height:500px}
+.u-scroll-420{max-height:420px;overflow-y:auto}
+.u-logo-40{max-height:40px;max-width:180px}
+.u-logo-preview{max-height:40px;max-width:160px;background:#1a1e2e;padding:6px;border-radius:6px}
+.u-favicon-preview{height:28px;width:28px;border:1px solid #e2e8f0;border-radius:6px;padding:2px}
+.u-msg-box{white-space:pre-wrap;font-size:.9rem;line-height:1.6}
+.u-chat-body{background:#e5ddd5;min-height:160px}
+.u-chat-bubble{background:#d9fdd3;white-space:pre-wrap;max-width:90%}
+.u-chat-area{background:#efeae2;display:flex;flex-direction:column;gap:.5rem}
+.u-textarea-round{resize:none;border-radius:20px!important}
+.u-shadow-lg{box-shadow:0 10px 40px rgba(16,24,40,.12)!important}
+.u-badge-brand{background:var(--brand) !important}
+.u-empty-note{text-align:center;margin:26px 0 0;font-size:15px}
+.u-mw-620{max-width:620px}
+.u-hero-sub{color:rgba(255,255,255,.8);max-width:620px;margin:0 auto}
+.u-sidebar-overlay{display:none!important;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1039}

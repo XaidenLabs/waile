@@ -1,0 +1,39 @@
+# Never expose a directory file listing
+Options -Indexes
+
+# ----------------------------------------------------------------------------
+# Root fallback router.
+#
+# BEST PRACTICE: point your web server's document root at the "public/" folder,
+# in which case this file is never used.
+#
+# This file only matters on shared hosting where you cannot change the document
+# root and must drop the whole app inside public_html/ (or a subfolder). It then
+# forwards requests into public/index.php. It is intentionally path-agnostic —
+# no hardcoded folder name — so it works whether WALE is installed at the domain
+# root or in any subfolder.
+# ----------------------------------------------------------------------------
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Send the bare app root to the front controller.
+    RewriteRule ^$ public/index.php [L]
+
+    # Serve real files and directories directly (assets, etc.).
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Serve uploaded assets (branding logos, favicons, etc.) from public/.
+    RewriteRule ^(uploads/.*)$ public/$1 [L]
+
+    # Serve bundled static assets (CSS/JS/fonts) from public/.
+    RewriteRule ^(assets/.*)$ public/$1 [L]
+
+    # Serve the app's static favicons from public/.
+    RewriteRule ^(favicon\.(?:svg|png|ico)|favicon-[0-9]+x[0-9]+\.png|apple-touch-icon\.png)$ public/$1 [L]
+
+    # Route everything else through public/index.php.
+    RewriteRule ^(.*)$ public/index.php/$1 [L,QSA]
+</IfModule>

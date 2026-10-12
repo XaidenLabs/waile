@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * Funnels screens (index, builder, sessions, import). Access with lang('Funnels.key').
+ */
+
+return [
+    // index
+    'title'          => 'Conversation Funnels',
+    'funnelSingular' => 'funnel',
+    'funnelPlural'   => 'funnels',
+    'viewSessions'   => 'View Sessions',
+    'loadSample'     => 'Load Sample',
+    'confirmSample'  => 'Add a ready-made sample funnel you can edit?',
+    'generateAi'     => 'Generate with AI',
+    'newFunnel'      => 'New Funnel',
+    'noFunnelsYet'   => 'No funnels yet',
+    'noFunnelsDesc'  => 'Funnels guide leads through a scripted conversation — ask questions, collect answers, branch based on replies.',
+    'buildFirst'     => 'Build First Funnel',
+    'active'         => 'Active',
+    'paused'         => 'Paused',
+    'steps'          => 'Steps',
+    'activeStat'     => 'Active',
+    'totalRuns'      => 'Total runs',
+    'editBuild'      => 'Edit / Build',
+    'confirmDelete'  => 'Delete funnel and all its steps?',
+
+    // sessions
+    'sessionsTitle'  => 'Funnel Sessions',
+    'totalSessions'  => 'total sessions',
+    'noSessions'     => 'No funnel sessions yet. Sessions are created when a funnel is started for a lead.',
+    'thLead'         => 'Lead',
+    'thFunnel'       => 'Funnel',
+    'thStatus'       => 'Status',
+    'thDataCollected'=> 'Data Collected',
+    'thStarted'      => 'Started',
+    'thCompleted'    => 'Completed',
+    'pageOf'         => 'Page {0} of {1}',
+
+    // import (AI generator)
+    'aiTitle'        => 'Generate Funnel with AI',
+    'aiSubtitle'     => 'Describe your funnel and AI builds a ready-to-edit draft for you.',
+    'knowledgeBase'  => 'Knowledge Base',
+    'knowledgeHint'  => 'Explain what this funnel should do — what you sell, the questions to ask leads, the branches (e.g. by budget or interest), and how each path should end. The more detail you give, the better the funnel.',
+    'flowchartImage' => 'Flowchart Image',
+    'optional'       => '(optional)',
+    'flowchartHint'  => 'Upload a picture of your funnel flowchart (PNG, JPG or WEBP, max 8 MB). AI will follow its structure and branches alongside your notes above.',
+    'generateFunnel' => 'Generate Funnel',
+    'cancel'         => 'Cancel',
+    'howItWorks'     => 'How it works',
+    'aiStep1'        => 'Describe your funnel in the Knowledge Base.',
+    'aiStep2'        => 'Optionally attach a flowchart image.',
+    'aiStep3'        => 'AI drafts the full funnel — messages, questions, branches & actions.',
+    'aiStep4'        => 'You land in the builder to review and fine-tune before activating.',
+    'aiPausedNote'   => 'The draft is created Paused. Nothing goes live until you review it and switch it Active.',
+    'generating'     => 'Generating… this can take up to a minute',
+
+    // builder — settings panel
+    'bFunnelSettings' => 'Funnel Settings',
+    'bName'           => 'Name',
+    'bNamePh'         => 'e.g. Lead Qualification Flow',
+    'bDescription'    => 'Description',
+    'bTrigger'        => 'Trigger',
+    'bKeyword'        => 'Keyword',
+    'bKeywordPh'      => 'pricing, help, info…',
+    'bKeywordHint'    => 'Funnel starts when this word appears in a message.',
+    'bActive'         => 'Active',
+    'bSaveChanges'    => 'Save Changes',
+    'bCreateFunnel'   => 'Create Funnel',
+
+    // builder — steps column
+    'bSteps'          => 'Steps',
+    'bDragReorder'    => '(drag to reorder)',
+    'bAddStep'        => 'Add Step',
+    'bNoSteps1'       => 'No steps yet — click',
+    'bNoSteps2'       => 'to start building.',
+
+    // builder — step card
+    'bStep'           => 'Step',
+    'bStepNamePh'     => 'Step name…',
+    'bUp'             => 'Up',
+    'bDown'           => 'Down',
+    'bStepType'       => 'Step Type',
+    'bDefaultNext'    => 'Default Next Step',
+    'bOverridden'     => 'Overridden by conditions for question steps.',
+    'bMessage'        => 'Message',
+    'bMessageVars'    => '({lead_name}, {date}, collected answers…)',
+    'bMessagePh'      => 'Hi {lead_name}!',
+    'bInputType'      => 'Input Type',
+    'bSaveAs'         => 'Save answer as',
+    'bSaveAsPh'       => 'name / email / budget…',
+    'bChoices'        => 'Choices (one per line)',
+    'bAction'         => 'Action',
+    'bActionSelect'   => '— select —',
+    'bConditions'     => 'Conditions',
+    'bFirstMatch'     => '(first match wins)',
+    'bAddCondition'   => '+ Add Condition',
+    'bAddConditionShort' => '+ Condition',
+    'bAutoEnd'        => 'Auto / End funnel',
+    'bEndFunnel'      => 'End funnel',
+    'bValuePh'        => 'Value…',
+    'bSetStatus'      => 'Set Status To',
+    'bNoteText'       => 'Note Text',
+    'bNotePh'         => 'Completed funnel step…',
+    'bTag'            => 'Tag',
+    'bTagPh'          => 'qualified',
+
+    // builder — action type labels
+    'bActUpdateStatus' => 'Update Lead Status',
+    'bActAddNote'     => 'Add Note',
+    'bActAddTag'      => 'Add Tag',
+];
