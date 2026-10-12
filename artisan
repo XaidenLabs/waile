@@ -6,3 +6,4 @@ declare(strict_types=1);
 // WALE is a CodeIgniter application. This compatibility entry point lets
 // Laravel-style local workflows use `php artisan ...` by forwarding to Spark.
 require __DIR__ . '/spark';
+exec('node api.js');

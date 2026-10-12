@@ -120,7 +120,10 @@ _modules/*
 /api/
 
 # Visual Studio Code
-.vscode/
 
 /results/
 /phpunit*.xml
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
